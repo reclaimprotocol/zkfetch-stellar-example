@@ -1,0 +1,21 @@
+{
+  "name": "zkfetch-stellar-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethersproject/keccak256": "^5.8.0",
+    "@reclaimprotocol/js-sdk": "^4.3.1",
+    "@reclaimprotocol/zk-fetch": "^0.4.0",
+    "@stellar/stellar-sdk": "^13.3.0",
+    "dotenv": "^17.2.1",
+    "stellar-hd-wallet": "^1.0.2"
+  }
+}

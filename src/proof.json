@@ -1,0 +1,22 @@
+{
+  "claimData": {
+    "provider": "http",
+    "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\{\\\"cardano\\\":\\\\{\\\"usd\\\":(?<price>[\\\\d\\\\.]+)\\\\}\\\\}\"}],\"responseRedactions\":[],\"url\":\"https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd\"}",
+    "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
+    "timestampS": 1753441433,
+    "context": "{\"extractedParameters\":{\"price\":\"0.810177\"},\"providerHash\":\"0xb111d03ae7dea7976f4b6de83c3e8c3bab6c8a66bbb7a9b27ce95bdf0498b525\"}",
+    "identifier": "0x4d4cb4439190cac9bb44fdb3676df2998c09de7a4abfb3d8b15826d91208ce1b",
+    "epoch": 1
+  },
+  "identifier": "0x4d4cb4439190cac9bb44fdb3676df2998c09de7a4abfb3d8b15826d91208ce1b",
+  "signatures": [
+    "0xb8014803c5336c03deb78ca6ab5a964150a0d0349773e7e05d2d9c67d6fb7f481c870d88c23040f8f67962edd964ec44f319a6ad65255c899de2bab78ad17f531b"
+  ],
+  "extractedParameterValues": { "price": "0.810177" },
+  "witnesses": [
+    {
+      "id": "0x244897572368eadf65bfbc5aec98d8e5443a9072",
+      "url": "wss://attestor.reclaimprotocol.org:447/ws"
+    }
+  ]
+}
