@@ -24,7 +24,10 @@ In `./src` run:
 node requestProof
 ```
 
-This will fetch a proof for accessing the latest XML price over Coin Gecko's API.
+This will fetch a proof for accessing the latest XML price over Coin Gecko's API. The price is to be found in `Proof.extractedParameterValues`, example:
+```
+"extractedParameterValues": { "price": "0.426629" }
+```
 
 In the same directory:
 ```
