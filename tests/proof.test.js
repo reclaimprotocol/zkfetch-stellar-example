@@ -5,8 +5,8 @@ import * as fs from "fs"
 let proof;
 
 describe("Proof validation tests", () => {
-  beforeAll(async () => {
-    const data = await fs.readFileSync("./src/proof.json");
+  beforeAll(() => {
+    const data = fs.readFileSync("./src/proof.json");
     proof = JSON.parse(data);
   });
 
