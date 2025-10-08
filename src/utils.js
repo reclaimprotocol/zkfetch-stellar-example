@@ -48,7 +48,7 @@ export const formatSignature = (signature) => {
   }
 
   // Remove the '0x' prefix and recovery ID suffix, keep only the signature part
-  return signature.substring(1, 130);
+  return signature.substring(1, 130).substring(1,130);
 };
 
 /**
