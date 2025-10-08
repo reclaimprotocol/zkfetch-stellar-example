@@ -202,7 +202,7 @@ npm run format:check
 - **Network**: Testnet
 - **Horizon URL**: https://horizon-testnet.stellar.org
 - **Soroban RPC**: https://soroban-testnet.stellar.org
-- **Contract ID**: CB5MLBRA5FOCU4ZE557UKHYIKA6ASE6U6ZNK4WVBMWZ7G6IOQMSSWCXQ
+- **Contract ID**: CCDFS3UOSJOM2RWKVFLT76SIKI3WCSVSFUGX24EL4NXVISFOFQB37KKO
 - **Explorer**: https://stellar.expert/explorer/testnet/
 
 ### API Endpoints
