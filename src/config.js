@@ -15,7 +15,8 @@ export const CONFIG = {
   // Reclaim Protocol credentials (intentionally hardcoded for demo)
   RECLAIM: {
     APP_ID: '0x381994d6B9B08C3e7CfE3A4Cd544C85101b8f201',
-    APP_SECRET: '0xfdc676e00ac9c648dfbcc271263c2dd95233a8abd391458c91ea88526a299223',
+    APP_SECRET:
+      '0xfdc676e00ac9c648dfbcc271263c2dd95233a8abd391458c91ea88526a299223',
   },
 
   // Stellar network configuration
@@ -36,7 +37,8 @@ export const CONFIG = {
 
   // API endpoints
   API: {
-    COINGECKO_STELLAR_PRICE: 'https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd',
+    COINGECKO_STELLAR_PRICE:
+      'https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd',
   },
 
   // File paths
@@ -56,12 +58,12 @@ export const CONFIG = {
  */
 export function validateEnvironment() {
   const required = ['SEEDPHRASE'];
-  const missing = required.filter(key => !process.env[key]);
+  const missing = required.filter((key) => !process.env[key]);
 
   if (missing.length > 0) {
     throw new Error(
       `Missing required environment variables: ${missing.join(', ')}\n` +
-      'Please create a .env file with the required variables. See .env.example for reference.'
+        'Please create a .env file with the required variables. See .env.example for reference.'
     );
   }
 }

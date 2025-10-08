@@ -1,6 +1,6 @@
 /**
  * Utility Functions for Proof Processing
- * 
+ *
  * This module contains utility functions for processing zero-knowledge proofs,
  * including signature formatting, recovery ID extraction, and hash generation.
  */
@@ -17,18 +17,18 @@ export const getRecId = (signature) => {
   if (!signature || typeof signature !== 'string') {
     throw new Error('Signature must be a valid string');
   }
-  
+
   if (signature.length < 2) {
     throw new Error('Signature too short to contain recovery ID');
   }
-  
+
   const rec = signature.slice(-2);
   const recId = parseInt(rec, 16) - 27;
-  
+
   if (recId < 0 || recId > 3) {
     throw new Error(`Invalid recovery ID: ${recId}`);
   }
-  
+
   return recId;
 };
 
@@ -42,11 +42,11 @@ export const formatSignature = (signature) => {
   if (!signature || typeof signature !== 'string') {
     throw new Error('Signature must be a valid string');
   }
-  
+
   if (signature.length < 130) {
     throw new Error('Signature too short to be valid');
   }
-  
+
   // Remove the '0x' prefix and recovery ID suffix, keep only the signature part
   return signature.substring(1, 130);
 };
@@ -61,23 +61,25 @@ export const getSerializedClaim = (proof) => {
   if (!proof || !proof.signedClaim || !proof.signedClaim.claim) {
     throw new Error('Invalid proof structure: missing signedClaim.claim');
   }
-  
+
   const claim = proof.signedClaim.claim;
   const requiredFields = ['identifier', 'owner', 'timestampS', 'epoch'];
-  
+
   for (const field of requiredFields) {
     if (claim[field] === undefined || claim[field] === null) {
       throw new Error(`Missing required claim field: ${field}`);
     }
   }
-  
-  return claim.identifier +
+
+  return (
+    claim.identifier +
     '\n' +
     claim.owner +
     '\n' +
     claim.timestampS +
     '\n' +
-    claim.epoch;
+    claim.epoch
+  );
 };
 
 /**
@@ -90,15 +92,15 @@ export const getHash = (serializedClaim) => {
   if (!serializedClaim || typeof serializedClaim !== 'string') {
     throw new Error('Serialized claim must be a valid string');
   }
-  
+
   try {
     // Ethereum signed message prefix
     const ethPrefix = '\x19Ethereum Signed Message:\n';
     const message = ethPrefix + serializedClaim.length + serializedClaim;
-    
+
     // Generate keccak256 hash
     const digest = keccak256(Buffer.from(message));
-    
+
     // Remove '0x' prefix and convert to Buffer
     const cleanDigest = digest.substring(2);
     return Buffer.from(cleanDigest, 'hex');
@@ -117,24 +119,31 @@ export const validateProofStructure = (proof) => {
   if (!proof || typeof proof !== 'object') {
     throw new Error('Proof must be an object');
   }
-  
+
   // Check for required top-level properties
-  const requiredTopLevel = ['claimData', 'signatures', 'extractedParameterValues'];
+  const requiredTopLevel = [
+    'claimData',
+    'signatures',
+    'extractedParameterValues',
+  ];
   for (const prop of requiredTopLevel) {
     if (!proof[prop]) {
       throw new Error(`Missing required proof property: ${prop}`);
     }
   }
-  
+
   // Check signatures array
   if (!Array.isArray(proof.signatures) || proof.signatures.length === 0) {
     throw new Error('Proof must have at least one signature');
   }
-  
+
   // Check extracted parameters
-  if (!proof.extractedParameterValues || typeof proof.extractedParameterValues !== 'object') {
+  if (
+    !proof.extractedParameterValues ||
+    typeof proof.extractedParameterValues !== 'object'
+  ) {
     throw new Error('Proof must have extractedParameterValues object');
   }
-  
+
   return true;
 };

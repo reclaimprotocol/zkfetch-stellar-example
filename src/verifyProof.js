@@ -1,6 +1,6 @@
 /**
  * Verify Proof Module
- * 
+ *
  * This module handles the verification of zero-knowledge proofs on the Stellar blockchain
  * using Soroban smart contracts.
  */
@@ -28,7 +28,7 @@ function createStellarWallet() {
     const wallet = StellarHDWallet.fromMnemonic(CONFIG.ENV.SEEDPHRASE);
     const secretKey = wallet.getSecret(0); // This gives the 'S'-starting secret key
     const keypair = StellarSdk.Keypair.fromSecret(secretKey);
-    
+
     return { wallet, keypair };
   } catch (error) {
     throw new Error(`Failed to create Stellar wallet: ${error.message}`);
@@ -48,15 +48,15 @@ function loadProof(proofPath) {
 
     const proofData = fs.readFileSync(proofPath, 'utf8');
     const proofJson = JSON.parse(proofData);
-    
+
     // Validate proof structure
     if (!proofJson.signatures || !proofJson.signatures.length) {
       throw new Error('Invalid proof: missing signatures');
     }
-    
+
     const proof = Reclaim.transformForOnchain(proofJson);
     console.log('✅ Proof loaded and validated');
-    
+
     return proof;
   } catch (error) {
     throw new Error(`Failed to load proof: ${error.message}`);
@@ -71,7 +71,9 @@ function loadProof(proofPath) {
 function prepareProofData(proof) {
   try {
     const recId = utils.getRecId(proof.signedClaim.signatures[0]);
-    const formattedSignature = utils.formatSignature(proof.signedClaim.signatures[0]);
+    const formattedSignature = utils.formatSignature(
+      proof.signedClaim.signatures[0]
+    );
     const serializedClaim = utils.getSerializedClaim(proof);
     const message = utils.getHash(serializedClaim);
     const signature = Buffer.from(formattedSignature, 'hex');
@@ -96,18 +98,22 @@ async function submitVerificationTransaction(keypair, proofData) {
   try {
     const server = await getStellarServer();
     const publicKey = keypair.publicKey();
-    
-    console.log(`🔗 Connecting to Stellar network: ${CONFIG.TESTNET_DETAILS.networkUrl}`);
-    
+
+    console.log(
+      `🔗 Connecting to Stellar network: ${CONFIG.TESTNET_DETAILS.networkUrl}`
+    );
+
     // Load account
     const accountResponse = await server.loadAccount(publicKey);
     const account = new StellarSdk.Account(publicKey, accountResponse.sequence);
-    
-    console.log(`📊 Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`);
-    
+
+    console.log(
+      `📊 Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
+    );
+
     // Create contract instance
     const contract = new StellarSdk.Contract(CONFIG.STELLAR.CONTRACT_ID);
-    
+
     // Build transaction
     const txBuilder = new StellarSdk.TransactionBuilder(account, {
       fee: CONFIG.STELLAR.BASE_FEE,
@@ -131,17 +137,19 @@ async function submitVerificationTransaction(keypair, proofData) {
     // Prepare and sign transaction
     const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR.SOROBAN_RPC_URL);
     const preparedTransaction = await rpcServer.prepareTransaction(tx);
-    
+
     console.log('✍️ Signing transaction...');
     preparedTransaction.sign(keypair);
 
     // Submit transaction
     console.log('📤 Submitting transaction to blockchain...');
     const sendResult = await rpcServer.sendTransaction(preparedTransaction);
-    
+
     console.log('✅ Transaction submitted successfully!');
-    console.log(`🔗 Transaction Link: ${CONFIG.STELLAR.EXPLORER_LINK}${sendResult.hash}`);
-    
+    console.log(
+      `🔗 Transaction Link: ${CONFIG.STELLAR.EXPLORER_LINK}${sendResult.hash}`
+    );
+
     return sendResult.hash;
   } catch (error) {
     throw new Error(`Failed to submit transaction: ${error.message}`);
@@ -155,23 +163,22 @@ async function submitVerificationTransaction(keypair, proofData) {
 export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
   try {
     console.log('🚀 Starting proof verification process...');
-    
+
     // Create wallet
     const { keypair } = createStellarWallet();
     console.log(`👛 Wallet address: ${keypair.publicKey()}`);
-    
+
     // Load proof
     const proof = loadProof(proofPath);
-    
+
     // Prepare proof data
     const proofData = prepareProofData(proof);
-    
+
     // Submit transaction
     const txHash = await submitVerificationTransaction(keypair, proofData);
-    
+
     console.log('✅ Proof verification completed successfully!');
     return txHash;
-    
   } catch (error) {
     console.error('❌ Error verifying proof:', error.message);
     throw error;

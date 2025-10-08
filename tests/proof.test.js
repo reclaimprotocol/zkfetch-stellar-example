@@ -1,11 +1,11 @@
 /**
  * Comprehensive Test Suite for zkfetch-stellar-example
- * 
+ *
  * This test suite validates proof generation, verification, and utility functions
  * to ensure the application works correctly.
  */
 
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { ethers } from 'ethers';
 import * as fs from 'fs';
 import * as utils from '../src/utils.js';
@@ -78,7 +78,8 @@ describe('Proof Validation Tests', () => {
         return;
       }
 
-      const message = proof.identifier +
+      const message =
+        proof.identifier +
         '\n' +
         proof.claimData.owner +
         '\n' +
@@ -103,7 +104,7 @@ describe('Proof Validation Tests', () => {
 
       const timestamp = proof.claimData.timestampS;
       expect(typeof timestamp).toBe('number');
-      
+
       const nowInSeconds = Math.floor(Date.now() / 1000);
       expect(timestamp).toBeLessThanOrEqual(nowInSeconds + 300);
       expect(timestamp).toBeGreaterThan(0);
@@ -146,7 +147,7 @@ describe('Proof Validation Tests', () => {
       } catch (e) {
         paramsObj = null;
       }
-      
+
       expect(paramsObj).not.toBeNull();
       expect(paramsObj).toHaveProperty('method');
       expect(paramsObj).toHaveProperty('url');
@@ -158,28 +159,36 @@ describe('Proof Validation Tests', () => {
 describe('Utility Functions Tests', () => {
   describe('getRecId', () => {
     it('should extract recovery ID correctly', () => {
-      const signature = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b';
+      const signature =
+        '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b';
       const recId = utils.getRecId(signature);
       expect(recId).toBe(0); // 0x1b - 27 = 0
     });
 
     it('should throw error for invalid signature', () => {
       expect(() => utils.getRecId('')).toThrow('Signature too short');
-      expect(() => utils.getRecId(null)).toThrow('Signature must be a valid string');
+      expect(() => utils.getRecId(null)).toThrow(
+        'Signature must be a valid string'
+      );
     });
   });
 
   describe('formatSignature', () => {
     it('should format signature correctly', () => {
-      const signature = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b';
+      const signature =
+        '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b';
       const formatted = utils.formatSignature(signature);
       expect(formatted).toHaveLength(128);
       expect(formatted).not.toContain('0x');
     });
 
     it('should throw error for invalid signature', () => {
-      expect(() => utils.formatSignature('short')).toThrow('Signature too short');
-      expect(() => utils.formatSignature(null)).toThrow('Signature must be a valid string');
+      expect(() => utils.formatSignature('short')).toThrow(
+        'Signature too short'
+      );
+      expect(() => utils.formatSignature(null)).toThrow(
+        'Signature must be a valid string'
+      );
     });
   });
 
@@ -201,8 +210,12 @@ describe('Utility Functions Tests', () => {
     });
 
     it('should throw error for invalid proof structure', () => {
-      expect(() => utils.getSerializedClaim(null)).toThrow('Invalid proof structure');
-      expect(() => utils.getSerializedClaim({})).toThrow('Invalid proof structure');
+      expect(() => utils.getSerializedClaim(null)).toThrow(
+        'Invalid proof structure'
+      );
+      expect(() => utils.getSerializedClaim({})).toThrow(
+        'Invalid proof structure'
+      );
     });
   });
 
@@ -215,8 +228,12 @@ describe('Utility Functions Tests', () => {
     });
 
     it('should throw error for invalid input', () => {
-      expect(() => utils.getHash(null)).toThrow('Serialized claim must be a valid string');
-      expect(() => utils.getHash('')).toThrow('Serialized claim must be a valid string');
+      expect(() => utils.getHash(null)).toThrow(
+        'Serialized claim must be a valid string'
+      );
+      expect(() => utils.getHash('')).toThrow(
+        'Serialized claim must be a valid string'
+      );
     });
   });
 
@@ -232,8 +249,12 @@ describe('Utility Functions Tests', () => {
     });
 
     it('should throw error for invalid proof structure', () => {
-      expect(() => utils.validateProofStructure(null)).toThrow('Proof must be an object');
-      expect(() => utils.validateProofStructure({})).toThrow('Missing required proof property');
+      expect(() => utils.validateProofStructure(null)).toThrow(
+        'Proof must be an object'
+      );
+      expect(() => utils.validateProofStructure({})).toThrow(
+        'Missing required proof property'
+      );
     });
   });
 });

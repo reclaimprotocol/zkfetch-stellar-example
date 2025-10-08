@@ -1,6 +1,6 @@
 /**
  * Main Entry Point for zkfetch-stellar-example
- * 
+ *
  * This is the main entry point that provides a unified interface for
  * requesting proofs and verifying them on the Stellar blockchain.
  */
@@ -45,15 +45,15 @@ class ZkFetchStellarApp {
   async runCompleteWorkflow(proofPath = CONFIG.PATHS.PROOF_FILE) {
     try {
       console.log('🚀 Starting complete zkFetch workflow...');
-      
+
       // Step 1: Request proof
       const proof = await this.requestStellarPriceProof(proofPath);
-      
+
       // Step 2: Verify proof
       const txHash = await this.verifyProofOnStellar(proofPath);
-      
+
       console.log('✅ Complete workflow finished successfully!');
-      
+
       return {
         proof,
         transactionHash: txHash,
@@ -109,21 +109,21 @@ async function main() {
     case 'request-proof':
       await app.requestStellarPriceProof();
       break;
-    
+
     case 'verify':
     case 'verify-proof':
       await app.verifyProofOnStellar();
       break;
-    
+
     case 'workflow':
     case 'complete':
       await app.runCompleteWorkflow();
       break;
-    
+
     case 'info':
       app.displayInfo();
       break;
-    
+
     default:
       console.log('Usage: node src/index.js [command]');
       console.log('Commands:');

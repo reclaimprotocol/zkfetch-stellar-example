@@ -1,6 +1,6 @@
 /**
  * Request Proof Module
- * 
+ *
  * This module handles the generation of zero-knowledge proofs for fetching
  * cryptocurrency price data from external APIs using the Reclaim Protocol.
  */
@@ -36,10 +36,7 @@ function validateOutputPath(outputPath) {
  */
 function createReclaimClient() {
   try {
-    return new ReclaimClient(
-      CONFIG.RECLAIM.APP_ID,
-      CONFIG.RECLAIM.APP_SECRET
-    );
+    return new ReclaimClient(CONFIG.RECLAIM.APP_ID, CONFIG.RECLAIM.APP_SECRET);
   } catch (error) {
     throw new Error(`Failed to create Reclaim client: ${error.message}`);
   }
@@ -52,9 +49,9 @@ function createReclaimClient() {
  */
 async function generateStellarPriceProof(reclaimClient) {
   const url = CONFIG.API.COINGECKO_STELLAR_PRICE;
-  
+
   console.log(`Fetching Stellar price from: ${url}`);
-  
+
   try {
     const proof = await reclaimClient.zkFetch(
       url,
@@ -70,8 +67,10 @@ async function generateStellarPriceProof(reclaimClient) {
     );
 
     console.log('✅ Proof generated successfully');
-    console.log(`📊 Extracted price: $${proof.extractedParameterValues?.price || 'N/A'}`);
-    
+    console.log(
+      `📊 Extracted price: $${proof.extractedParameterValues?.price || 'N/A'}`
+    );
+
     return proof;
   } catch (error) {
     throw new Error(`Failed to generate proof: ${error.message}`);
@@ -100,22 +99,21 @@ function saveProof(proof, outputPath) {
 export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE) {
   try {
     console.log('🚀 Starting proof request process...');
-    
+
     // Validate inputs
     validateOutputPath(outputPath);
-    
+
     // Create Reclaim client
     const reclaimClient = createReclaimClient();
-    
+
     // Generate proof
     const proof = await generateStellarPriceProof(reclaimClient);
-    
+
     // Save proof
     saveProof(proof, outputPath);
-    
+
     console.log('✅ Proof request completed successfully!');
     return proof;
-    
   } catch (error) {
     console.error('❌ Error requesting proof:', error.message);
     throw error;
