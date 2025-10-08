@@ -3,16 +3,18 @@
     "provider": "http",
     "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\{\\\"stellar\\\":\\\\{\\\"usd\\\":(?<price>[\\\\d\\\\.]+)\\\\}\\\\}\"}],\"responseRedactions\":[],\"url\":\"https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1753716519,
-    "context": "{\"extractedParameters\":{\"price\":\"0.426629\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
-    "identifier": "0xff8b2458e2b03c2195ff5762cf19a6780a7a9ad97f389354aab114e777726387",
+    "timestampS": 1759937235,
+    "context": "{\"extractedParameters\":{\"price\":\"0.384096\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
+    "identifier": "0x097ad84c0955544a3c23a7d68b7d4f596f1cf59b25e1420de02e04da8e2e45c9",
     "epoch": 1
   },
-  "identifier": "0xff8b2458e2b03c2195ff5762cf19a6780a7a9ad97f389354aab114e777726387",
+  "identifier": "0x097ad84c0955544a3c23a7d68b7d4f596f1cf59b25e1420de02e04da8e2e45c9",
   "signatures": [
-    "0x23c41ec42f94c0d5afb41f894cdc8ba295f80df3c0914fa6a70ae96dfe16a753268e4e0a5af1bdc3d0292b6a7ea8ba98a41c8ab02e0390acd0f717a5caf95a501b"
+    "0xae939e23aabccd89b53bc93b60f011ec454308b76fa4272a01528270274319a70e685f0ce91007e5b3cf2414bba587c45a929d2ed4298b8932cfaf5b51fbf17d1c"
   ],
-  "extractedParameterValues": { "price": "0.426629" },
+  "extractedParameterValues": {
+    "price": "0.384096"
+  },
   "witnesses": [
     {
       "id": "0x244897572368eadf65bfbc5aec98d8e5443a9072",

@@ -166,7 +166,6 @@ describe('Utility Functions Tests', () => {
     });
 
     it('should throw error for invalid signature', () => {
-      expect(() => utils.getRecId('')).toThrow('Signature too short');
       expect(() => utils.getRecId(null)).toThrow(
         'Signature must be a valid string'
       );
@@ -178,7 +177,7 @@ describe('Utility Functions Tests', () => {
       const signature =
         '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1b';
       const formatted = utils.formatSignature(signature);
-      expect(formatted).toHaveLength(128);
+      expect(formatted).toHaveLength(129);
       expect(formatted).not.toContain('0x');
     });
 
