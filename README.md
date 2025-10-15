@@ -1,28 +1,53 @@
-# 🌟 zkFetch Stellar Example
+# zkFetch Stellar Example
 
-A comprehensive demonstration of zero-knowledge proof generation and verification using the Reclaim Protocol integrated with the Stellar blockchain. This project showcases how to fetch cryptocurrency price data with cryptographic proofs and verify them on-chain using Soroban smart contracts.
+A comprehensive demonstration of zero-knowledge proof generation and verification using the Reclaim Protocol integrated with the Stellar blockchain. This project showcases how to fetch data from various sources with cryptographic proofs and verify them on-chain using Soroban smart contracts.
 
-## 🚀 Features
+## Supported Data Sources
+
+This project supports **five different data sources** for generating zero-knowledge proofs:
+
+### 1. **Stellar Price Data** (CoinGecko)
+- **Source**: CoinGecko API
+- **Data**: Real-time Stellar (XLM) cryptocurrency price in USD
+- **Use Case**: Cryptocurrency price verification and trading applications
+
+### 2. **Economic Data** (Trading Economics)
+- **Source**: Trading Economics website
+- **Data**: Countries GDP data and economic indicators
+- **Use Case**: Economic analysis and financial reporting
+
+### 3. **Billionaires Data** (Forbes)
+- **Source**: Forbes Real-Time Billionaires API
+- **Data**: Live billionaire rankings, names, and net worth
+- **Use Case**: Wealth tracking and financial analytics
+
+### 4. **Weather Data** (AccuWeather)
+- **Source**: AccuWeather NYC weather page
+- **Data**: Current temperature and city information for New York
+- **Use Case**: Weather verification and climate applications
+
+### 5. **Sports Data** (Goal.com)
+- **Source**: Goal.com live scores page
+- **Data**: Live football match scores and team information
+- **Use Case**: Sports betting verification and match tracking
+
+## Features
 
 - **Zero-Knowledge Proof Generation**: Generate cryptographic proofs for external API data
 - **Stellar Blockchain Integration**: Verify proofs on Stellar testnet using Soroban contracts
-- **Cryptocurrency Price Feeds**: Fetch real-time Stellar (XLM) price data from CoinGecko
-- **Economic Data Feeds**: Fetch countries GDP data from Trading Economics
-- **Billionaires Data Feeds**: Fetch real-time billionaires data from Forbes
-- **Weather Data Feeds**: Fetch NYC weather data from AccuWeather
-- **Sports Data Feeds**: Fetch live football scores from Goal.com
+- **Multi-Source Data Support**: Five different data sources with unique extraction patterns
 - **Comprehensive Testing**: Full test suite with utility function validation
 - **Modern Development Setup**: ESLint, Prettier, and automated testing
 - **CLI Interface**: Easy-to-use command-line interface for all operations
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js >= 18.0.0
 - npm or yarn package manager
 - Stellar testnet account with XLM for transaction fees
 - Basic understanding of blockchain and zero-knowledge proofs
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the repository**
    ```bash
@@ -51,7 +76,7 @@ A comprehensive demonstration of zero-knowledge proof generation and verificatio
    npm run setup
    ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -76,7 +101,7 @@ The application uses a centralized configuration system in `src/config.js`:
 - **API Endpoints**: CoinGecko API for price data
 - **File Paths**: Default locations for proof files
 
-## 🎯 Usage
+## Usage
 
 ### Command Line Interface
 
@@ -160,7 +185,7 @@ const goalProof = await requestProof('./goal-proof.json', 'goal');
 const txHash = await verifyProof('./custom-proof.json');
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 
@@ -182,7 +207,7 @@ npm run test:coverage
 - **Utility Function Tests**: Tests all helper functions with edge cases
 - **Configuration Tests**: Validates application configuration
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 zkfetch-stellar-example/
@@ -204,7 +229,7 @@ zkfetch-stellar-example/
 └── package.json           # Project dependencies and scripts
 ```
 
-## 🔧 Development
+## Development
 
 ### Code Quality
 
@@ -235,7 +260,7 @@ npm run format:check
 - `npm run format` - Format code
 - `npm run setup` - Run setup script
 
-## 🌐 Network Configuration
+## Network Configuration
 
 ### Stellar Testnet
 
@@ -248,16 +273,20 @@ npm run format:check
 ### API Endpoints
 
 - **CoinGecko Stellar Price**: https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd
+- **Trading Economics Countries**: https://tradingeconomics.com/
+- **Forbes Billionaires**: https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth
+- **AccuWeather NYC**: https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727
+- **Goal.com Live Scores**: https://www.goal.com/en-in/live-scores
 
-## 🔍 How It Works
+## How It Works
 
 ### 1. Proof Generation
 
-The application uses the Reclaim Protocol to generate zero-knowledge proofs:
+The application uses the Reclaim Protocol to generate zero-knowledge proofs for multiple data sources:
 
-1. **API Request**: Fetches Stellar price data from CoinGecko
-2. **Data Extraction**: Uses regex patterns to extract price information
-3. **Proof Generation**: Creates cryptographic proof of the data
+1. **API Request**: Fetches data from the selected source (CoinGecko, Trading Economics, Forbes, AccuWeather, or Goal.com)
+2. **Data Extraction**: Uses specialized regex patterns to extract relevant information from each source
+3. **Proof Generation**: Creates cryptographic proof of the extracted data
 4. **File Storage**: Saves proof to JSON file
 
 ### 2. Proof Verification
@@ -276,7 +305,7 @@ The application interacts with a Soroban smart contract that:
 - Validates proof structure
 - Stores verification results on-chain
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -306,7 +335,7 @@ The application interacts with a Soroban smart contract that:
 - `Failed to create Stellar wallet`: Verify your seedphrase format
 - `Transaction failed`: Check account balance and network status
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -314,25 +343,29 @@ The application interacts with a Soroban smart contract that:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Reclaim Protocol](https://reclaimprotocol.org/) for zero-knowledge proof infrastructure
 - [Stellar Development Foundation](https://stellar.org/) for blockchain platform
 - [CoinGecko](https://coingecko.com/) for cryptocurrency price data
+- [Trading Economics](https://tradingeconomics.com/) for economic data
+- [Forbes](https://forbes.com/) for billionaires data
+- [AccuWeather](https://accuweather.com/) for weather data
+- [Goal.com](https://goal.com/) for sports data
 - [Soroban](https://soroban.stellar.org/) for smart contract platform
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Reclaim Protocol Documentation](https://docs.reclaimprotocol.org/)
 - [Stellar Documentation](https://developers.stellar.org/)
 - [Soroban Documentation](https://soroban.stellar.org/docs)
 - [Zero-Knowledge Proofs](https://en.wikipedia.org/wiki/Zero-knowledge_proof)
 
-## 🔗 Links
+## Links
 
 - **Repository**: https://github.com/your-username/zkfetch-stellar-example
 - **Issues**: https://github.com/your-username/zkfetch-stellar-example/issues
