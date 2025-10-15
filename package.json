@@ -8,6 +8,7 @@
     "start": "node src/index.js",
     "request-proof": "node src/requestProof.js",
     "request-trading-economics": "node src/index.js request-trading-economics",
+    "request-forbes": "node src/index.js request-forbes",
     "verify-proof": "node src/verifyProof.js",
     "test": "vitest",
     "test:watch": "vitest --watch",

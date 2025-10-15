@@ -38,6 +38,16 @@ class ZkFetchStellarApp {
   }
 
   /**
+   * Requests a new proof for Forbes real-time billionaires data
+   * @param {string} outputPath - Optional custom output path
+   * @returns {Promise<Object>} The generated proof
+   */
+  async requestForbesProof(outputPath) {
+    console.log('💰 Requesting Forbes billionaires proof...');
+    return await requestProof(outputPath, 'forbes');
+  }
+
+  /**
    * Verifies a proof on the Stellar blockchain
    * @param {string} proofPath - Optional custom proof file path
    * @returns {Promise<string>} Transaction hash
@@ -92,6 +102,7 @@ using the Reclaim Protocol and Stellar blockchain.
 Features:
 • Generate ZK proofs for cryptocurrency price data (Stellar)
 • Generate ZK proofs for economic data (Trading Economics countries GDP)
+• Generate ZK proofs for billionaires data (Forbes real-time billionaires)
 • Verify proofs on Stellar testnet using Soroban contracts
 • Complete workflow automation
 
@@ -100,10 +111,12 @@ Configuration:
 • Contract: ${this.config.STELLAR.CONTRACT_ID}
 • Stellar API: ${this.config.API.COINGECKO_STELLAR_PRICE}
 • Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
+• Forbes API: ${this.config.API.FORBES_BILLIONAIRES}
 
 Usage:
   npm run request-proof              # Generate a new Stellar price proof
   node src/index.js request-trading-economics  # Generate Trading Economics proof
+  node src/index.js request-forbes  # Generate Forbes billionaires proof
   npm run verify-proof              # Verify existing proof
   npm start                         # Run complete workflow
     `);
@@ -127,6 +140,10 @@ async function main() {
       await app.requestTradingEconomicsProof();
       break;
 
+    case 'request-forbes':
+      await app.requestForbesProof();
+      break;
+
     case 'verify':
     case 'verify-proof':
       await app.verifyProofOnStellar();
@@ -146,6 +163,7 @@ async function main() {
       console.log('Commands:');
       console.log('  request-proof            Generate a new Stellar price proof');
       console.log('  request-trading-economics Generate a new Trading Economics proof');
+      console.log('  request-forbes           Generate a new Forbes billionaires proof');
       console.log('  verify-proof             Verify existing proof');
       console.log('  workflow                 Run complete workflow');
       console.log('  info                     Display application info');

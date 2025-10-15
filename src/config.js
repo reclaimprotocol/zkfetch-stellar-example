@@ -40,6 +40,7 @@ export const CONFIG = {
     COINGECKO_STELLAR_PRICE:
       'https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd',
     TRADING_ECONOMICS_COUNTRIES: 'https://tradingeconomics.com/',
+    FORBES_BILLIONAIRES: 'https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth',
   },
 
   // File paths

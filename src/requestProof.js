@@ -138,6 +138,65 @@ async function generateTradingEconomicsProof(reclaimClient) {
 }
 
 /**
+ * Generates a zero-knowledge proof for Forbes real-time billionaires data
+ * @param {ReclaimClient} reclaimClient - The Reclaim client instance
+ * @returns {Promise<Object>} The generated proof
+ */
+async function generateForbesProof(reclaimClient) {
+  const url = CONFIG.API.FORBES_BILLIONAIRES;
+
+  console.log(`Fetching Forbes billionaires data from: ${url}`);
+
+  try {
+    const proof = await reclaimClient.zkFetch(
+      url,
+      {
+        method: 'GET',
+        headers: {
+          'accept': 'application/json, text/plain, */*',
+          'accept-language': 'en-US,en;q=0.9',
+          'priority': 'u=1, i',
+          'sec-ch-ua': '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin'
+        },
+        context: {
+          contextAddress: '0x0',
+          contextMessage: 'forbes real time billionaires'
+        }
+      },
+      {
+        responseMatches: [{
+          type: 'regex',
+          value: '(?:\\"personName\\":\\s*\\"(?<name1>[^\\"]+)\\".*?\\"rank\\":\\s*(?<rank1>\\d+).*?\\"finalWorth\\":\\s*(?<worth1>[\\d.]+))(?:(?:.*?\\"personName\\":\\s*\\"(?<name2>[^\\"]+)\\".*?\\"rank\\":\\s*(?<rank2>\\d+).*?\\"finalWorth\\":\\s*(?<worth2>[\\d.]+))){0,1}(?:(?:.*?\\"personName\\":\\s*\\"(?<name3>[^\\"]+)\\".*?\\"rank\\":\\s*(?<rank3>\\d+).*?\\"finalWorth\\":\\s*(?<worth3>[\\d.]+))){0,1}(?:(?:.*?\\"personName\\":\\s*\\"(?<name4>[^\\"]+)\\".*?\\"rank\\":\\s*(?<rank4>\\d+).*?\\"finalWorth\\":\\s*(?<worth4>[\\d.]+))){0,1}(?:(?:.*?\\"personName\\":\\s*\\"(?<name5>[^\\"]+)\\".*?\\"rank\\":\\s*(?<rank5>\\d+).*?\\"finalWorth\\":\\s*(?<worth5>[\\d.]+))){0,1}'
+        }],
+        responseRedactions: []
+      }
+    );
+
+    console.log('✅ Forbes proof generated successfully');
+    console.log('💰 Extracted billionaires data:');
+    
+    const extractedValues = proof.extractedParameterValues || {};
+    for (let i = 1; i <= 5; i++) {
+      const name = extractedValues[`name${i}`];
+      const rank = extractedValues[`rank${i}`];
+      const worth = extractedValues[`worth${i}`];
+      if (name && rank && worth) {
+        console.log(`   #${rank} ${name}: $${worth}B`);
+      }
+    }
+
+    return proof;
+  } catch (error) {
+    throw new Error(`Failed to generate Forbes proof: ${error.message}`);
+  }
+}
+
+/**
  * Saves the proof to a JSON file
  * @param {Object} proof - The proof object to save
  * @param {string} outputPath - Path where to save the proof
@@ -176,8 +235,11 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofTy
       case 'trading-economics':
         proof = await generateTradingEconomicsProof(reclaimClient);
         break;
+      case 'forbes':
+        proof = await generateForbesProof(reclaimClient);
+        break;
       default:
-        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics'`);
+        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics', 'forbes'`);
     }
 
     // Save proof
@@ -199,7 +261,7 @@ async function main() {
     const proofType = process.argv[2] || 'stellar';
     const outputPath = process.argv[3] || CONFIG.PATHS.PROOF_FILE;
     
-    console.log(`Available proof types: 'stellar', 'trading-economics'`);
+    console.log(`Available proof types: 'stellar', 'trading-economics', 'forbes'`);
     console.log(`Using proof type: ${proofType}`);
     
     await requestProof(outputPath, proofType);

@@ -8,6 +8,7 @@ A comprehensive demonstration of zero-knowledge proof generation and verificatio
 - **Stellar Blockchain Integration**: Verify proofs on Stellar testnet using Soroban contracts
 - **Cryptocurrency Price Feeds**: Fetch real-time Stellar (XLM) price data from CoinGecko
 - **Economic Data Feeds**: Fetch countries GDP data from Trading Economics
+- **Billionaires Data Feeds**: Fetch real-time billionaires data from Forbes
 - **Comprehensive Testing**: Full test suite with utility function validation
 - **Modern Development Setup**: ESLint, Prettier, and automated testing
 - **CLI Interface**: Easy-to-use command-line interface for all operations
@@ -84,6 +85,9 @@ npm run request-proof
 # Generate a new Trading Economics countries GDP proof
 npm run request-trading-economics
 
+# Generate a new Forbes billionaires proof
+npm run request-forbes
+
 # Verify existing proof on blockchain
 npm run verify-proof
 
@@ -107,6 +111,9 @@ const stellarProof = await app.requestStellarPriceProof();
 // Request a new Trading Economics countries GDP proof
 const tradingEconomicsProof = await app.requestTradingEconomicsProof();
 
+// Request a new Forbes billionaires proof
+const forbesProof = await app.requestForbesProof();
+
 // Verify proof on blockchain
 const txHash = await app.verifyProofOnStellar();
 
@@ -125,6 +132,9 @@ const stellarProof = await requestProof('./stellar-proof.json', 'stellar');
 
 // Request Trading Economics proof with custom output path
 const tradingEconomicsProof = await requestProof('./trading-economics-proof.json', 'trading-economics');
+
+// Request Forbes proof with custom output path
+const forbesProof = await requestProof('./forbes-proof.json', 'forbes');
 
 // Verify proof with custom file path
 const txHash = await verifyProof('./custom-proof.json');

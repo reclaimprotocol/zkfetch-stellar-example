@@ -1,28 +1,33 @@
 {
   "claimData": {
     "provider": "http",
-    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=0, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"document\",\"sec-fetch-mode\":\"navigate\",\"sec-fetch-site\":\"none\",\"sec-fetch-user\":\"?1\",\"upgrade-insecure-requests\":\"1\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"(?:<a class=\\\"matrix-country\\\"[^>]*>(?<country1>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp1>\\\\d+)<\\\\/a>)(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country2>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp2>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country3>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp3>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country4>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp4>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country5>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp5>\\\\d+)<\\\\/a>){0,1}\"}],\"responseRedactions\":[],\"url\":\"https://tradingeconomics.com/\"}",
+    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"application/json, text/plain, */*\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=1, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"(?:\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name1>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank1>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth1>[\\\\d.]+))(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name2>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank2>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth2>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name3>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank3>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth3>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name4>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank4>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth4>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name5>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank5>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth5>[\\\\d.]+))){0,1}\"}],\"responseRedactions\":[],\"url\":\"https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1760538152,
-    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"countries gdp\",\"extractedParameters\":{\"country1\":\"United States                                     \",\"country2\":\"China                                             \",\"country3\":\"Euro Area                                         \",\"country4\":\"Germany                                           \",\"country5\":\"Japan                                             \",\"gdp1\":\"29185\",\"gdp2\":\"18744\",\"gdp3\":\"16406\",\"gdp4\":\"4660\",\"gdp5\":\"4026\"},\"providerHash\":\"0x9038efa897ac96a15e6f87cf4e4ae5dbc6a230919e916517928a5acd1ef8cc47\"}",
-    "identifier": "0x80277189f00f399292119d86f6006202804803f11bc12ecdbebc41e20691abf2",
+    "timestampS": 1760538475,
+    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"forbes real time billionaires\",\"extractedParameters\":{\"name1\":\"Elon Musk\",\"name2\":\"Larry Ellison\",\"name3\":\"Mark Zuckerberg\",\"name4\":\"Jeff Bezos\",\"name5\":\"Larry Page\",\"rank1\":\"2\",\"rank2\":\"3\",\"rank3\":\"4\",\"rank4\":\"5\",\"rank5\":\"6\",\"worth1\":\"368897.41\",\"worth2\":\"246883.314\",\"worth3\":\"230251.001\",\"worth4\":\"207352.021\",\"worth5\":\"192389.486\"},\"providerHash\":\"0x08fe7fed3421185304f6c7f57b6e206394b64ba10974a3ea7f6e06e083d94107\"}",
+    "identifier": "0x15289188363a879639db7e5a73fb8a15558090ce524c0598094d3f4e5664ef1c",
     "epoch": 1
   },
-  "identifier": "0x80277189f00f399292119d86f6006202804803f11bc12ecdbebc41e20691abf2",
+  "identifier": "0x15289188363a879639db7e5a73fb8a15558090ce524c0598094d3f4e5664ef1c",
   "signatures": [
-    "0x34f8e87983977594e47f88b24e548ca0dc28240b9de1ccd985c0c2105470cd681603635595aa64d8a31d36eb34688dc4b0d7432a1821cd6ef4e6fb12989fee0e1c"
+    "0x5a0d25ba386794e14579289f0674290a505397dfcb442ac5fc9421d5b76fdb915398d89257c327db6f4e0413bf564cadc3bde7fd9a23c8851bfa2f7c47fcf74b1c"
   ],
   "extractedParameterValues": {
-    "country1": "United States                                     ",
-    "country2": "China                                             ",
-    "country3": "Euro Area                                         ",
-    "country4": "Germany                                           ",
-    "country5": "Japan                                             ",
-    "gdp1": "29185",
-    "gdp2": "18744",
-    "gdp3": "16406",
-    "gdp4": "4660",
-    "gdp5": "4026"
+    "name1": "Elon Musk",
+    "name2": "Larry Ellison",
+    "name3": "Mark Zuckerberg",
+    "name4": "Jeff Bezos",
+    "name5": "Larry Page",
+    "rank1": "2",
+    "rank2": "3",
+    "rank3": "4",
+    "rank4": "5",
+    "rank5": "6",
+    "worth1": "368897.41",
+    "worth2": "246883.314",
+    "worth3": "230251.001",
+    "worth4": "207352.021",
+    "worth5": "192389.486"
   },
   "witnesses": [
     {
