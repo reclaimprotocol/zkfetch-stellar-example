@@ -197,6 +197,74 @@ async function generateForbesProof(reclaimClient) {
 }
 
 /**
+ * Generates a zero-knowledge proof for AccuWeather NYC weather data
+ * @param {ReclaimClient} reclaimClient - The Reclaim client instance
+ * @returns {Promise<Object>} The generated proof
+ */
+async function generateAccuWeatherProof(reclaimClient) {
+  const url = CONFIG.API.ACCUWEATHER_NYC;
+
+  console.log(`Fetching AccuWeather NYC data from: ${url}`);
+
+  try {
+    const proof = await reclaimClient.zkFetch(
+      url,
+      {
+        method: 'GET',
+        headers: {
+          'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          'accept-language': 'en-US,en;q=0.9',
+          'priority': 'u=0, i',
+          'sec-ch-ua': '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+          'sec-fetch-dest': 'document',
+          'sec-fetch-mode': 'navigate',
+          'sec-fetch-site': 'none',
+          'sec-fetch-user': '?1',
+          'upgrade-insecure-requests': '1'
+        },
+        context: {
+          contextAddress: '0x0',
+          contextMessage: 'accuweather nyc'
+        }
+      },
+      {
+        responseMatches: [
+          {
+            type: 'regex',
+            value: '\\"englishName\\":(?<city>.*?),'
+          },
+          {
+            type: 'regex',
+            value: '<div class="temp">(?<tempInC>.*?)&#xB0;'
+          }
+        ],
+        responseRedactions: []
+      }
+    );
+
+    console.log('✅ AccuWeather proof generated successfully');
+    console.log('🌤️ Extracted weather data:');
+    
+    const extractedValues = proof.extractedParameterValues || {};
+    const city = extractedValues.city;
+    const tempInC = extractedValues.tempInC;
+    
+    if (city) {
+      console.log(`   City: ${city}`);
+    }
+    if (tempInC) {
+      console.log(`   Temperature: ${tempInC}°C`);
+    }
+
+    return proof;
+  } catch (error) {
+    throw new Error(`Failed to generate AccuWeather proof: ${error.message}`);
+  }
+}
+
+/**
  * Saves the proof to a JSON file
  * @param {Object} proof - The proof object to save
  * @param {string} outputPath - Path where to save the proof
@@ -238,8 +306,11 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofTy
       case 'forbes':
         proof = await generateForbesProof(reclaimClient);
         break;
+      case 'accuweather':
+        proof = await generateAccuWeatherProof(reclaimClient);
+        break;
       default:
-        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics', 'forbes'`);
+        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics', 'forbes', 'accuweather'`);
     }
 
     // Save proof
@@ -261,7 +332,7 @@ async function main() {
     const proofType = process.argv[2] || 'stellar';
     const outputPath = process.argv[3] || CONFIG.PATHS.PROOF_FILE;
     
-    console.log(`Available proof types: 'stellar', 'trading-economics', 'forbes'`);
+    console.log(`Available proof types: 'stellar', 'trading-economics', 'forbes', 'accuweather'`);
     console.log(`Using proof type: ${proofType}`);
     
     await requestProof(outputPath, proofType);

@@ -9,6 +9,7 @@ A comprehensive demonstration of zero-knowledge proof generation and verificatio
 - **Cryptocurrency Price Feeds**: Fetch real-time Stellar (XLM) price data from CoinGecko
 - **Economic Data Feeds**: Fetch countries GDP data from Trading Economics
 - **Billionaires Data Feeds**: Fetch real-time billionaires data from Forbes
+- **Weather Data Feeds**: Fetch NYC weather data from AccuWeather
 - **Comprehensive Testing**: Full test suite with utility function validation
 - **Modern Development Setup**: ESLint, Prettier, and automated testing
 - **CLI Interface**: Easy-to-use command-line interface for all operations
@@ -88,6 +89,9 @@ npm run request-trading-economics
 # Generate a new Forbes billionaires proof
 npm run request-forbes
 
+# Generate a new AccuWeather NYC proof
+npm run request-accuweather
+
 # Verify existing proof on blockchain
 npm run verify-proof
 
@@ -114,6 +118,9 @@ const tradingEconomicsProof = await app.requestTradingEconomicsProof();
 // Request a new Forbes billionaires proof
 const forbesProof = await app.requestForbesProof();
 
+// Request a new AccuWeather NYC proof
+const accuWeatherProof = await app.requestAccuWeatherProof();
+
 // Verify proof on blockchain
 const txHash = await app.verifyProofOnStellar();
 
@@ -135,6 +142,9 @@ const tradingEconomicsProof = await requestProof('./trading-economics-proof.json
 
 // Request Forbes proof with custom output path
 const forbesProof = await requestProof('./forbes-proof.json', 'forbes');
+
+// Request AccuWeather proof with custom output path
+const accuWeatherProof = await requestProof('./accuweather-proof.json', 'accuweather');
 
 // Verify proof with custom file path
 const txHash = await verifyProof('./custom-proof.json');

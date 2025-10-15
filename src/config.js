@@ -41,6 +41,7 @@ export const CONFIG = {
       'https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd',
     TRADING_ECONOMICS_COUNTRIES: 'https://tradingeconomics.com/',
     FORBES_BILLIONAIRES: 'https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth',
+    ACCUWEATHER_NYC: 'https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727',
   },
 
   // File paths

@@ -1,33 +1,20 @@
 {
   "claimData": {
     "provider": "http",
-    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"application/json, text/plain, */*\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=1, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"empty\",\"sec-fetch-mode\":\"cors\",\"sec-fetch-site\":\"same-origin\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"(?:\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name1>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank1>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth1>[\\\\d.]+))(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name2>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank2>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth2>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name3>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank3>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth3>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name4>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank4>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth4>[\\\\d.]+))){0,1}(?:(?:.*?\\\\\\\"personName\\\\\\\":\\\\s*\\\\\\\"(?<name5>[^\\\\\\\"]+)\\\\\\\".*?\\\\\\\"rank\\\\\\\":\\\\s*(?<rank5>\\\\d+).*?\\\\\\\"finalWorth\\\\\\\":\\\\s*(?<worth5>[\\\\d.]+))){0,1}\"}],\"responseRedactions\":[],\"url\":\"https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth\"}",
+    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=0, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"document\",\"sec-fetch-mode\":\"navigate\",\"sec-fetch-site\":\"none\",\"sec-fetch-user\":\"?1\",\"upgrade-insecure-requests\":\"1\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\\\\"englishName\\\\\\\":(?<city>.*?),\"},{\"type\":\"regex\",\"value\":\"<div class=\\\"temp\\\">(?<tempInC>.*?)&#xB0;\"}],\"responseRedactions\":[],\"url\":\"https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1760538475,
-    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"forbes real time billionaires\",\"extractedParameters\":{\"name1\":\"Elon Musk\",\"name2\":\"Larry Ellison\",\"name3\":\"Mark Zuckerberg\",\"name4\":\"Jeff Bezos\",\"name5\":\"Larry Page\",\"rank1\":\"2\",\"rank2\":\"3\",\"rank3\":\"4\",\"rank4\":\"5\",\"rank5\":\"6\",\"worth1\":\"368897.41\",\"worth2\":\"246883.314\",\"worth3\":\"230251.001\",\"worth4\":\"207352.021\",\"worth5\":\"192389.486\"},\"providerHash\":\"0x08fe7fed3421185304f6c7f57b6e206394b64ba10974a3ea7f6e06e083d94107\"}",
-    "identifier": "0x15289188363a879639db7e5a73fb8a15558090ce524c0598094d3f4e5664ef1c",
+    "timestampS": 1760538744,
+    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"accuweather nyc\",\"extractedParameters\":{\"city\":\"\\\"New York\\\"\",\"tempInC\":\"15\"},\"providerHash\":\"0xe5d788d4198a88d39acf04999f224cebfad25d0bfe8b1e48afa35ad62f3d4199\"}",
+    "identifier": "0x7ca6bcb67c29dac8916b5ccfb26542533dad57876a3a7915e138c742e00a4acf",
     "epoch": 1
   },
-  "identifier": "0x15289188363a879639db7e5a73fb8a15558090ce524c0598094d3f4e5664ef1c",
+  "identifier": "0x7ca6bcb67c29dac8916b5ccfb26542533dad57876a3a7915e138c742e00a4acf",
   "signatures": [
-    "0x5a0d25ba386794e14579289f0674290a505397dfcb442ac5fc9421d5b76fdb915398d89257c327db6f4e0413bf564cadc3bde7fd9a23c8851bfa2f7c47fcf74b1c"
+    "0x6e9fa7cf48cbcb7e0a6ce92511ec50baea87cfd8bf432caadffeba1d6f1a596060b498526dd8aaf4fdc672367df6bfe93a05bff504536ba6274f3166c76055961c"
   ],
   "extractedParameterValues": {
-    "name1": "Elon Musk",
-    "name2": "Larry Ellison",
-    "name3": "Mark Zuckerberg",
-    "name4": "Jeff Bezos",
-    "name5": "Larry Page",
-    "rank1": "2",
-    "rank2": "3",
-    "rank3": "4",
-    "rank4": "5",
-    "rank5": "6",
-    "worth1": "368897.41",
-    "worth2": "246883.314",
-    "worth3": "230251.001",
-    "worth4": "207352.021",
-    "worth5": "192389.486"
+    "city": "\"New York\"",
+    "tempInC": "15"
   },
   "witnesses": [
     {
