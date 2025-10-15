@@ -78,6 +78,66 @@ async function generateStellarPriceProof(reclaimClient) {
 }
 
 /**
+ * Generates a zero-knowledge proof for Trading Economics countries GDP data
+ * @param {ReclaimClient} reclaimClient - The Reclaim client instance
+ * @returns {Promise<Object>} The generated proof
+ */
+async function generateTradingEconomicsProof(reclaimClient) {
+  const url = CONFIG.API.TRADING_ECONOMICS_COUNTRIES;
+
+  console.log(`Fetching countries GDP data from: ${url}`);
+
+  try {
+    const proof = await reclaimClient.zkFetch(
+      url,
+      {
+        method: 'GET',
+        headers: {
+          'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          'accept-language': 'en-US,en;q=0.9',
+          'priority': 'u=0, i',
+          'sec-ch-ua': '"Google Chrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+          'sec-fetch-dest': 'document',
+          'sec-fetch-mode': 'navigate',
+          'sec-fetch-site': 'none',
+          'sec-fetch-user': '?1',
+          'upgrade-insecure-requests': '1'
+        },
+        context: {
+          contextAddress: '0x0',
+          contextMessage: 'countries gdp'
+        }
+      },
+      {
+        responseMatches: [{
+          type: 'regex',
+          value: '(?:<a class="matrix-country"[^>]*>(?<country1>[^<]+)<\\/a><\\/td>\\s*<td data-heatmap-value=\'\\d+\'><a[^>]*>(?<gdp1>\\d+)<\\/a>)(?:.*?<a class="matrix-country"[^>]*>(?<country2>[^<]+)<\\/a><\\/td>\\s*<td data-heatmap-value=\'\\d+\'><a[^>]*>(?<gdp2>\\d+)<\\/a>){0,1}(?:.*?<a class="matrix-country"[^>]*>(?<country3>[^<]+)<\\/a><\\/td>\\s*<td data-heatmap-value=\'\\d+\'><a[^>]*>(?<gdp3>\\d+)<\\/a>){0,1}(?:.*?<a class="matrix-country"[^>]*>(?<country4>[^<]+)<\\/a><\\/td>\\s*<td data-heatmap-value=\'\\d+\'><a[^>]*>(?<gdp4>\\d+)<\\/a>){0,1}(?:.*?<a class="matrix-country"[^>]*>(?<country5>[^<]+)<\\/a><\\/td>\\s*<td data-heatmap-value=\'\\d+\'><a[^>]*>(?<gdp5>\\d+)<\\/a>){0,1}'
+        }],
+        responseRedactions: []
+      }
+    );
+
+    console.log('✅ Trading Economics proof generated successfully');
+    console.log('📊 Extracted countries and GDP data:');
+    
+    const extractedValues = proof.extractedParameterValues || {};
+    for (let i = 1; i <= 5; i++) {
+      const country = extractedValues[`country${i}`];
+      const gdp = extractedValues[`gdp${i}`];
+      if (country && gdp) {
+        console.log(`   ${country}: $${gdp}`);
+      }
+    }
+
+    return proof;
+  } catch (error) {
+    throw new Error(`Failed to generate Trading Economics proof: ${error.message}`);
+  }
+}
+
+/**
  * Saves the proof to a JSON file
  * @param {Object} proof - The proof object to save
  * @param {string} outputPath - Path where to save the proof
@@ -95,10 +155,11 @@ function saveProof(proof, outputPath) {
 /**
  * Main function to request and save a proof
  * @param {string} outputPath - Path where the proof will be saved
+ * @param {string} proofType - Type of proof to generate ('stellar' or 'trading-economics')
  */
-export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE) {
+export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofType = 'stellar') {
   try {
-    console.log('🚀 Starting proof request process...');
+    console.log(`🚀 Starting ${proofType} proof request process...`);
 
     // Validate inputs
     validateOutputPath(outputPath);
@@ -106,8 +167,18 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE) {
     // Create Reclaim client
     const reclaimClient = createReclaimClient();
 
-    // Generate proof
-    const proof = await generateStellarPriceProof(reclaimClient);
+    // Generate proof based on type
+    let proof;
+    switch (proofType) {
+      case 'stellar':
+        proof = await generateStellarPriceProof(reclaimClient);
+        break;
+      case 'trading-economics':
+        proof = await generateTradingEconomicsProof(reclaimClient);
+        break;
+      default:
+        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics'`);
+    }
 
     // Save proof
     saveProof(proof, outputPath);
@@ -125,8 +196,13 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE) {
  */
 async function main() {
   try {
-    const outputPath = process.argv[2] || CONFIG.PATHS.PROOF_FILE;
-    await requestProof(outputPath);
+    const proofType = process.argv[2] || 'stellar';
+    const outputPath = process.argv[3] || CONFIG.PATHS.PROOF_FILE;
+    
+    console.log(`Available proof types: 'stellar', 'trading-economics'`);
+    console.log(`Using proof type: ${proofType}`);
+    
+    await requestProof(outputPath, proofType);
     process.exit(0);
   } catch (error) {
     console.error('❌ Fatal error:', error.message);

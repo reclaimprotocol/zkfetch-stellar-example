@@ -24,7 +24,17 @@ class ZkFetchStellarApp {
    */
   async requestStellarPriceProof(outputPath) {
     console.log('🌟 Requesting Stellar price proof...');
-    return await requestProof(outputPath);
+    return await requestProof(outputPath, 'stellar');
+  }
+
+  /**
+   * Requests a new proof for Trading Economics countries GDP data
+   * @param {string} outputPath - Optional custom output path
+   * @returns {Promise<Object>} The generated proof
+   */
+  async requestTradingEconomicsProof(outputPath) {
+    console.log('🌍 Requesting Trading Economics countries GDP proof...');
+    return await requestProof(outputPath, 'trading-economics');
   }
 
   /**
@@ -80,19 +90,22 @@ This application demonstrates zero-knowledge proof generation and verification
 using the Reclaim Protocol and Stellar blockchain.
 
 Features:
-• Generate ZK proofs for cryptocurrency price data
+• Generate ZK proofs for cryptocurrency price data (Stellar)
+• Generate ZK proofs for economic data (Trading Economics countries GDP)
 • Verify proofs on Stellar testnet using Soroban contracts
 • Complete workflow automation
 
 Configuration:
 • Network: ${this.config.TESTNET_DETAILS.network}
 • Contract: ${this.config.STELLAR.CONTRACT_ID}
-• API: ${this.config.API.COINGECKO_STELLAR_PRICE}
+• Stellar API: ${this.config.API.COINGECKO_STELLAR_PRICE}
+• Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
 
 Usage:
-  npm run request-proof    # Generate a new proof
-  npm run verify-proof      # Verify existing proof
-  npm start                 # Run complete workflow
+  npm run request-proof              # Generate a new Stellar price proof
+  node src/index.js request-trading-economics  # Generate Trading Economics proof
+  npm run verify-proof              # Verify existing proof
+  npm start                         # Run complete workflow
     `);
   }
 }
@@ -108,6 +121,10 @@ async function main() {
     case 'request':
     case 'request-proof':
       await app.requestStellarPriceProof();
+      break;
+
+    case 'request-trading-economics':
+      await app.requestTradingEconomicsProof();
       break;
 
     case 'verify':
@@ -127,10 +144,11 @@ async function main() {
     default:
       console.log('Usage: node src/index.js [command]');
       console.log('Commands:');
-      console.log('  request-proof  Generate a new proof');
-      console.log('  verify-proof   Verify existing proof');
-      console.log('  workflow       Run complete workflow');
-      console.log('  info           Display application info');
+      console.log('  request-proof            Generate a new Stellar price proof');
+      console.log('  request-trading-economics Generate a new Trading Economics proof');
+      console.log('  verify-proof             Verify existing proof');
+      console.log('  workflow                 Run complete workflow');
+      console.log('  info                     Display application info');
       break;
   }
 }

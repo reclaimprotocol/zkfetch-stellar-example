@@ -1,19 +1,28 @@
 {
   "claimData": {
     "provider": "http",
-    "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\{\\\"stellar\\\":\\\\{\\\"usd\\\":(?<price>[\\\\d\\\\.]+)\\\\}\\\\}\"}],\"responseRedactions\":[],\"url\":\"https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd\"}",
+    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=0, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"document\",\"sec-fetch-mode\":\"navigate\",\"sec-fetch-site\":\"none\",\"sec-fetch-user\":\"?1\",\"upgrade-insecure-requests\":\"1\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"(?:<a class=\\\"matrix-country\\\"[^>]*>(?<country1>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp1>\\\\d+)<\\\\/a>)(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country2>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp2>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country3>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp3>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country4>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp4>\\\\d+)<\\\\/a>){0,1}(?:.*?<a class=\\\"matrix-country\\\"[^>]*>(?<country5>[^<]+)<\\\\/a><\\\\/td>\\\\s*<td data-heatmap-value='\\\\d+'><a[^>]*>(?<gdp5>\\\\d+)<\\\\/a>){0,1}\"}],\"responseRedactions\":[],\"url\":\"https://tradingeconomics.com/\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1759937235,
-    "context": "{\"extractedParameters\":{\"price\":\"0.384096\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
-    "identifier": "0x097ad84c0955544a3c23a7d68b7d4f596f1cf59b25e1420de02e04da8e2e45c9",
+    "timestampS": 1760538152,
+    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"countries gdp\",\"extractedParameters\":{\"country1\":\"United States                                     \",\"country2\":\"China                                             \",\"country3\":\"Euro Area                                         \",\"country4\":\"Germany                                           \",\"country5\":\"Japan                                             \",\"gdp1\":\"29185\",\"gdp2\":\"18744\",\"gdp3\":\"16406\",\"gdp4\":\"4660\",\"gdp5\":\"4026\"},\"providerHash\":\"0x9038efa897ac96a15e6f87cf4e4ae5dbc6a230919e916517928a5acd1ef8cc47\"}",
+    "identifier": "0x80277189f00f399292119d86f6006202804803f11bc12ecdbebc41e20691abf2",
     "epoch": 1
   },
-  "identifier": "0x097ad84c0955544a3c23a7d68b7d4f596f1cf59b25e1420de02e04da8e2e45c9",
+  "identifier": "0x80277189f00f399292119d86f6006202804803f11bc12ecdbebc41e20691abf2",
   "signatures": [
-    "0xae939e23aabccd89b53bc93b60f011ec454308b76fa4272a01528270274319a70e685f0ce91007e5b3cf2414bba587c45a929d2ed4298b8932cfaf5b51fbf17d1c"
+    "0x34f8e87983977594e47f88b24e548ca0dc28240b9de1ccd985c0c2105470cd681603635595aa64d8a31d36eb34688dc4b0d7432a1821cd6ef4e6fb12989fee0e1c"
   ],
   "extractedParameterValues": {
-    "price": "0.384096"
+    "country1": "United States                                     ",
+    "country2": "China                                             ",
+    "country3": "Euro Area                                         ",
+    "country4": "Germany                                           ",
+    "country5": "Japan                                             ",
+    "gdp1": "29185",
+    "gdp2": "18744",
+    "gdp3": "16406",
+    "gdp4": "4660",
+    "gdp5": "4026"
   },
   "witnesses": [
     {

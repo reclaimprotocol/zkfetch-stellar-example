@@ -39,6 +39,7 @@ export const CONFIG = {
   API: {
     COINGECKO_STELLAR_PRICE:
       'https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd',
+    TRADING_ECONOMICS_COUNTRIES: 'https://tradingeconomics.com/',
   },
 
   // File paths

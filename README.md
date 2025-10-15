@@ -7,6 +7,7 @@ A comprehensive demonstration of zero-knowledge proof generation and verificatio
 - **Zero-Knowledge Proof Generation**: Generate cryptographic proofs for external API data
 - **Stellar Blockchain Integration**: Verify proofs on Stellar testnet using Soroban contracts
 - **Cryptocurrency Price Feeds**: Fetch real-time Stellar (XLM) price data from CoinGecko
+- **Economic Data Feeds**: Fetch countries GDP data from Trading Economics
 - **Comprehensive Testing**: Full test suite with utility function validation
 - **Modern Development Setup**: ESLint, Prettier, and automated testing
 - **CLI Interface**: Easy-to-use command-line interface for all operations
@@ -77,8 +78,11 @@ The application uses a centralized configuration system in `src/config.js`:
 ### Command Line Interface
 
 ```bash
-# Generate a new proof
+# Generate a new Stellar price proof
 npm run request-proof
+
+# Generate a new Trading Economics countries GDP proof
+npm run request-trading-economics
 
 # Verify existing proof on blockchain
 npm run verify-proof
@@ -97,8 +101,11 @@ import { ZkFetchStellarApp } from './src/index.js';
 
 const app = new ZkFetchStellarApp();
 
-// Request a new proof
-const proof = await app.requestStellarPriceProof();
+// Request a new Stellar price proof
+const stellarProof = await app.requestStellarPriceProof();
+
+// Request a new Trading Economics countries GDP proof
+const tradingEconomicsProof = await app.requestTradingEconomicsProof();
 
 // Verify proof on blockchain
 const txHash = await app.verifyProofOnStellar();
@@ -113,8 +120,11 @@ const result = await app.runCompleteWorkflow();
 import { requestProof } from './src/requestProof.js';
 import { verifyProof } from './src/verifyProof.js';
 
-// Request proof with custom output path
-const proof = await requestProof('./custom-proof.json');
+// Request Stellar price proof with custom output path
+const stellarProof = await requestProof('./stellar-proof.json', 'stellar');
+
+// Request Trading Economics proof with custom output path
+const tradingEconomicsProof = await requestProof('./trading-economics-proof.json', 'trading-economics');
 
 // Verify proof with custom file path
 const txHash = await verifyProof('./custom-proof.json');
