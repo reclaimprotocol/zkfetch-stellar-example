@@ -1,20 +1,22 @@
 {
   "claimData": {
     "provider": "http",
-    "parameters": "{\"body\":\"\",\"headers\":{\"User-Agent\":\"reclaim/0.0.1\",\"accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\"accept-language\":\"en-US,en;q=0.9\",\"priority\":\"u=0, i\",\"sec-ch-ua\":\"\\\"Google Chrome\\\";v=\\\"141\\\", \\\"Not?A_Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"141\\\"\",\"sec-ch-ua-mobile\":\"?0\",\"sec-ch-ua-platform\":\"\\\"macOS\\\"\",\"sec-fetch-dest\":\"document\",\"sec-fetch-mode\":\"navigate\",\"sec-fetch-site\":\"none\",\"sec-fetch-user\":\"?1\",\"upgrade-insecure-requests\":\"1\"},\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\\\\"englishName\\\\\\\":(?<city>.*?),\"},{\"type\":\"regex\",\"value\":\"<div class=\\\"temp\\\">(?<tempInC>.*?)&#xB0;\"}],\"responseRedactions\":[],\"url\":\"https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727\"}",
+    "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"<div class=\\\"fco-match-team-and-score\\\">.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team1>.*?)</div>.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team2>.*?)</div>.*?<div class=\\\"fco-match-score\\\" data-side=\\\"team-a\\\">(?<score1>\\\\d+)</div>\\\\s*<div class=\\\"fco-match-score\\\" data-side=\\\"team-b\\\">(?<score2>\\\\d+)</div>\"}],\"responseRedactions\":[{\"regex\":\"<div class=\\\"fco-match-team-and-score\\\">.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team1>.*?)</div>.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team2>.*?)</div>.*?<div class=\\\"fco-match-score\\\" data-side=\\\"team-a\\\">(?<score1>\\\\d+)</div>\\\\s*<div class=\\\"fco-match-score\\\" data-side=\\\"team-b\\\">(?<score2>\\\\d+)</div>\"}],\"url\":\"https://www.goal.com/en-in/live-scores\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1760538744,
-    "context": "{\"contextAddress\":\"0x0\",\"contextMessage\":\"accuweather nyc\",\"extractedParameters\":{\"city\":\"\\\"New York\\\"\",\"tempInC\":\"15\"},\"providerHash\":\"0xe5d788d4198a88d39acf04999f224cebfad25d0bfe8b1e48afa35ad62f3d4199\"}",
-    "identifier": "0x7ca6bcb67c29dac8916b5ccfb26542533dad57876a3a7915e138c742e00a4acf",
+    "timestampS": 1760539144,
+    "context": "{\"extractedParameters\":{\"score1\":\"4\",\"score2\":\"0\",\"team1\":\"Spain\",\"team2\":\"Bulgaria\"},\"providerHash\":\"0x52308bec51424e0cf27ed229db12285840bc7b58abe159f2af02ae9c85846a2b\"}",
+    "identifier": "0x9c304f482e0b645774d2ab691975e16bfdeaf0bcd300ec2966216fcdb2a1fd07",
     "epoch": 1
   },
-  "identifier": "0x7ca6bcb67c29dac8916b5ccfb26542533dad57876a3a7915e138c742e00a4acf",
+  "identifier": "0x9c304f482e0b645774d2ab691975e16bfdeaf0bcd300ec2966216fcdb2a1fd07",
   "signatures": [
-    "0x6e9fa7cf48cbcb7e0a6ce92511ec50baea87cfd8bf432caadffeba1d6f1a596060b498526dd8aaf4fdc672367df6bfe93a05bff504536ba6274f3166c76055961c"
+    "0x637efc4a6bf74cd7b8530ab45da3534083026797287e406c703071e1ab1ab3c14b25159e6bbb78cb0ca1742073f197f8fd0db6038767205b4055ace9f73a373c1c"
   ],
   "extractedParameterValues": {
-    "city": "\"New York\"",
-    "tempInC": "15"
+    "score1": "4",
+    "score2": "0",
+    "team1": "Spain",
+    "team2": "Bulgaria"
   },
   "witnesses": [
     {

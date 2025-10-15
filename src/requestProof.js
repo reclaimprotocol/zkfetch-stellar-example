@@ -265,6 +265,56 @@ async function generateAccuWeatherProof(reclaimClient) {
 }
 
 /**
+ * Generates a zero-knowledge proof for Goal.com live scores data
+ * @param {ReclaimClient} reclaimClient - The Reclaim client instance
+ * @returns {Promise<Object>} The generated proof
+ */
+async function generateGoalProof(reclaimClient) {
+  const url = CONFIG.API.GOAL_LIVE_SCORES;
+
+  console.log(`Fetching Goal.com live scores data from: ${url}`);
+
+  try {
+    const proof = await reclaimClient.zkFetch(
+      url,
+      {
+        method: 'GET'
+      },
+      {
+        responseMatches: [
+          {
+            type: 'regex',
+            value: '<div class="fco-match-team-and-score">.*?<div class="fco-team-name fco-long-name">(?<team1>.*?)</div>.*?<div class="fco-team-name fco-long-name">(?<team2>.*?)</div>.*?<div class="fco-match-score" data-side="team-a">(?<score1>\\d+)</div>\\s*<div class="fco-match-score" data-side="team-b">(?<score2>\\d+)</div>'
+          }
+        ],
+        responseRedactions: [
+          {
+            regex: '<div class="fco-match-team-and-score">.*?<div class="fco-team-name fco-long-name">(?<team1>.*?)</div>.*?<div class="fco-team-name fco-long-name">(?<team2>.*?)</div>.*?<div class="fco-match-score" data-side="team-a">(?<score1>\\d+)</div>\\s*<div class="fco-match-score" data-side="team-b">(?<score2>\\d+)</div>'
+          }
+        ]
+      }
+    );
+
+    console.log('✅ Goal.com proof generated successfully');
+    console.log('⚽ Extracted live scores data:');
+    
+    const extractedValues = proof.extractedParameterValues || {};
+    const team1 = extractedValues.team1;
+    const team2 = extractedValues.team2;
+    const score1 = extractedValues.score1;
+    const score2 = extractedValues.score2;
+    
+    if (team1 && team2 && score1 && score2) {
+      console.log(`   ${team1} ${score1} - ${score2} ${team2}`);
+    }
+
+    return proof;
+  } catch (error) {
+    throw new Error(`Failed to generate Goal.com proof: ${error.message}`);
+  }
+}
+
+/**
  * Saves the proof to a JSON file
  * @param {Object} proof - The proof object to save
  * @param {string} outputPath - Path where to save the proof
@@ -309,8 +359,11 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofTy
       case 'accuweather':
         proof = await generateAccuWeatherProof(reclaimClient);
         break;
+      case 'goal':
+        proof = await generateGoalProof(reclaimClient);
+        break;
       default:
-        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics', 'forbes', 'accuweather'`);
+        throw new Error(`Unknown proof type: ${proofType}. Supported types: 'stellar', 'trading-economics', 'forbes', 'accuweather', 'goal'`);
     }
 
     // Save proof
@@ -332,7 +385,7 @@ async function main() {
     const proofType = process.argv[2] || 'stellar';
     const outputPath = process.argv[3] || CONFIG.PATHS.PROOF_FILE;
     
-    console.log(`Available proof types: 'stellar', 'trading-economics', 'forbes', 'accuweather'`);
+    console.log(`Available proof types: 'stellar', 'trading-economics', 'forbes', 'accuweather', 'goal'`);
     console.log(`Using proof type: ${proofType}`);
     
     await requestProof(outputPath, proofType);

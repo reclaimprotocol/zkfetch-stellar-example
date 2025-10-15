@@ -42,6 +42,7 @@ export const CONFIG = {
     TRADING_ECONOMICS_COUNTRIES: 'https://tradingeconomics.com/',
     FORBES_BILLIONAIRES: 'https://www.forbes.com/forbesapi/person/rtb/0/-estWorthPrev/true.json?fields=rank,personName,finalWorth',
     ACCUWEATHER_NYC: 'https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727',
+    GOAL_LIVE_SCORES: 'https://www.goal.com/en-in/live-scores',
   },
 
   // File paths

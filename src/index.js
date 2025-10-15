@@ -58,6 +58,16 @@ class ZkFetchStellarApp {
   }
 
   /**
+   * Requests a new proof for Goal.com live scores data
+   * @param {string} outputPath - Optional custom output path
+   * @returns {Promise<Object>} The generated proof
+   */
+  async requestGoalProof(outputPath) {
+    console.log('⚽ Requesting Goal.com live scores proof...');
+    return await requestProof(outputPath, 'goal');
+  }
+
+  /**
    * Verifies a proof on the Stellar blockchain
    * @param {string} proofPath - Optional custom proof file path
    * @returns {Promise<string>} Transaction hash
@@ -114,6 +124,7 @@ Features:
 • Generate ZK proofs for economic data (Trading Economics countries GDP)
 • Generate ZK proofs for billionaires data (Forbes real-time billionaires)
 • Generate ZK proofs for weather data (AccuWeather NYC)
+• Generate ZK proofs for sports data (Goal.com live scores)
 • Verify proofs on Stellar testnet using Soroban contracts
 • Complete workflow automation
 
@@ -124,12 +135,14 @@ Configuration:
 • Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
 • Forbes API: ${this.config.API.FORBES_BILLIONAIRES}
 • AccuWeather API: ${this.config.API.ACCUWEATHER_NYC}
+• Goal.com API: ${this.config.API.GOAL_LIVE_SCORES}
 
 Usage:
   npm run request-proof              # Generate a new Stellar price proof
   node src/index.js request-trading-economics  # Generate Trading Economics proof
   node src/index.js request-forbes  # Generate Forbes billionaires proof
   node src/index.js request-accuweather  # Generate AccuWeather NYC proof
+  node src/index.js request-goal    # Generate Goal.com live scores proof
   npm run verify-proof              # Verify existing proof
   npm start                         # Run complete workflow
     `);
@@ -161,6 +174,10 @@ async function main() {
       await app.requestAccuWeatherProof();
       break;
 
+    case 'request-goal':
+      await app.requestGoalProof();
+      break;
+
     case 'verify':
     case 'verify-proof':
       await app.verifyProofOnStellar();
@@ -182,6 +199,7 @@ async function main() {
       console.log('  request-trading-economics Generate a new Trading Economics proof');
       console.log('  request-forbes           Generate a new Forbes billionaires proof');
       console.log('  request-accuweather      Generate a new AccuWeather NYC proof');
+      console.log('  request-goal             Generate a new Goal.com live scores proof');
       console.log('  verify-proof             Verify existing proof');
       console.log('  workflow                 Run complete workflow');
       console.log('  info                     Display application info');

@@ -10,6 +10,7 @@
     "request-trading-economics": "node src/index.js request-trading-economics",
     "request-forbes": "node src/index.js request-forbes",
     "request-accuweather": "node src/index.js request-accuweather",
+    "request-goal": "node src/index.js request-goal",
     "verify-proof": "node src/verifyProof.js",
     "test": "vitest",
     "test:watch": "vitest --watch",

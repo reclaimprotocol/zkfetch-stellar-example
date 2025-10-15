@@ -10,6 +10,7 @@ A comprehensive demonstration of zero-knowledge proof generation and verificatio
 - **Economic Data Feeds**: Fetch countries GDP data from Trading Economics
 - **Billionaires Data Feeds**: Fetch real-time billionaires data from Forbes
 - **Weather Data Feeds**: Fetch NYC weather data from AccuWeather
+- **Sports Data Feeds**: Fetch live football scores from Goal.com
 - **Comprehensive Testing**: Full test suite with utility function validation
 - **Modern Development Setup**: ESLint, Prettier, and automated testing
 - **CLI Interface**: Easy-to-use command-line interface for all operations
@@ -92,6 +93,9 @@ npm run request-forbes
 # Generate a new AccuWeather NYC proof
 npm run request-accuweather
 
+# Generate a new Goal.com live scores proof
+npm run request-goal
+
 # Verify existing proof on blockchain
 npm run verify-proof
 
@@ -121,6 +125,9 @@ const forbesProof = await app.requestForbesProof();
 // Request a new AccuWeather NYC proof
 const accuWeatherProof = await app.requestAccuWeatherProof();
 
+// Request a new Goal.com live scores proof
+const goalProof = await app.requestGoalProof();
+
 // Verify proof on blockchain
 const txHash = await app.verifyProofOnStellar();
 
@@ -145,6 +152,9 @@ const forbesProof = await requestProof('./forbes-proof.json', 'forbes');
 
 // Request AccuWeather proof with custom output path
 const accuWeatherProof = await requestProof('./accuweather-proof.json', 'accuweather');
+
+// Request Goal.com proof with custom output path
+const goalProof = await requestProof('./goal-proof.json', 'goal');
 
 // Verify proof with custom file path
 const txHash = await verifyProof('./custom-proof.json');
