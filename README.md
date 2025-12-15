@@ -326,6 +326,12 @@ The application interacts with a Soroban smart contract that:
 | Unix Timestamp | https://www.unixtimestamp.com/| `<div[^>]*class="value epoch"[^>]*>\\s*(?<timestamp>[0-9]+)\\s*</div>` | `{ timestamp: '1765773231' }` |
 | Wiki Stats | https://en.wikipedia.org/wiki/Special:Statistics | `<td[^>]*class="mw-statistics-numbers"[^>]*>\s*(?<value>[0-9,]+)\s*</td>` | `{ value: '7,105,949' }` |
 | Worldometers | https://www.worldometers.info/geography/countries-of-the-world/ | `<td[^>]*data-order="\\d+"[^>]*>\\s*(?<population>[0-9,]+)\\s*</td>` | `{ population: '1,463,865,525' }` |
+| Random Number | https://www.randomnumberapi.com/api/v1.0/random?min=1&max=100&count=1 | `\\[(?<data>\\d+)\\]` | `{ data: '34' }` |
+| Github Rate Limit | https://api.github.com/rate_limit | `\"rate\"\\s*:\\s*\\{[\\s\\S]*?\"limit\"\\s*:\\s*(?<limit>\\d+),[\\s\\S]*?\"remaining\"\\s*:\\s*(?<remaining>\\d+),[\\s\\S]*?\"reset\"\\s*:\\s*(?<reset>\\d+),[\\s\\S]*?\"used\"\\s*:\\s*(?<used>\\d+),[\\s\\S]*?\"resource\"\\s*:\\s*\"(?<resource>[^\"]+)\"` | `{limit: '60', remaining: '60',reset: '1765806768',resource: 'core',used: '0'}` |
+| Earthquake| https://earthquake.usgs.gov/fdsnws/event/1/count?format=geojson | `\"count\"\\s*:\\s*(?<count>\\d+)` | `{ count: '9077' }` |
+| NPM React| https://registry.npmjs.org/react | `\"author\"\\s*:\\s*\\{[\\s\\S]*?\"name\"\\s*:\\s*\"(?<author>[^\"]+)\"` | `{ author: 'Jeff Barczewski' }` |
+| Postman Echo| https://postman-echo.com/get | `\"user-agent\"\\s*:\\s*\"(?<userAgent>[^\"]+)\"` | `{ userAgent: 'reclaim/0.0.1' }` |
+| Crossref| https://api.crossref.org/works/10.1038/nature12373 | `\"reference-count\"\\s*:\\s*(?<referenceCount>\\d+)` | `{ referenceCount: '30' }` |
 
 ## Troubleshooting
 
