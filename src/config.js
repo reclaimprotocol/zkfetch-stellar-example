@@ -21,7 +21,7 @@ export const CONFIG = {
 
   // Stellar network configuration
   STELLAR: {
-    CONTRACT_ID: 'CCDFS3UOSJOM2RWKVFLT76SIKI3WCSVSFUGX24EL4NXVISFOFQB37KKO',
+    CONTRACT_ID: 'CBWG6TV76FMWKJX3THMMEMK66JVU7Z43JGX74XMB3IKBAZQL66AXP4D7',
     SOROBAN_RPC_URL: 'https://soroban-testnet.stellar.org',
     EXPLORER_LINK: 'https://stellar.expert/explorer/testnet/tx/',
     FUNCTION_NAME: 'verify_proof',
