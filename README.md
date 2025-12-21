@@ -91,7 +91,7 @@ SEEDPHRASE=your twelve word seedphrase goes here for stellar wallet generation
 # Optional: Override default network settings
 # NETWORK_URL=https://horizon-testnet.stellar.org
 # SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
-# CONTRACT_ID=CBWG6TV76FMWKJX3THMMEMK66JVU7Z43JGX74XMB3IKBAZQL66AXP4D7
+# CONTRACT_ID=CA3EMXR6JOOTNP44T3OAJFMMMGKRRETDJKBLZP2RU3SIY4SDFAH54DU5
 
 # For Mainnet:
 # CONTRACT_ID=CD4M2KHW3ESOV3RUT7KCTC6BX37PIL2Z3BEK47IA74KIMFIFUI3JJDMO
