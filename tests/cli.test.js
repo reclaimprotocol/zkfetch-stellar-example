@@ -262,5 +262,23 @@ describe('index CLI', () => {
       'goal'
     );
   });
+
+  it('handles request-accuweather command', async () => {
+    vi.resetModules();
+    const requestProofMock = vi.fn();
+    vi.doMock('../src/requestProof.js', () => ({
+      requestProof: requestProofMock,
+    }));
+    vi.doMock('../src/verifyProof.js', () => ({
+      verifyProof: vi.fn(),
+    }));
+    process.argv = ['node', 'index.js', 'request-accuweather'];
+    const { main } = await import('../src/index.js');
+    await main();
+    expect(requestProofMock).toHaveBeenCalledWith(
+      undefined,
+      'accuweather'
+    );
+  });
 });
 

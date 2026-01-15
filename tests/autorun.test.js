@@ -129,7 +129,7 @@ describe('autorun branches', () => {
     );
     process.argv = ['node', requestProofPath, 'stellar', './src/proof.json'];
 
-    await import(`../src/requestProof.js?autorun=1`);
+    await import('../src/requestProof.js');
     expect(exitSpy).toHaveBeenCalledWith(0);
   });
 
@@ -143,7 +143,7 @@ describe('autorun branches', () => {
     const indexPath = fileURLToPath(new URL('../src/index.js', import.meta.url));
     process.argv = ['node', indexPath, 'info'];
 
-    await import(`../src/index.js?autorun=1`);
+    await import('../src/index.js');
   });
 });
 

@@ -43,6 +43,26 @@ describe('GreenTickReporter', () => {
     expect(reporter.log).toHaveBeenCalled();
   });
 
+  it('handles missing diagnostic values', () => {
+    const reporter = new GreenTickReporter();
+    reporter.log = vi.fn();
+    reporter.getTestIndentation = () => '';
+    reporter.getDurationPrefix = () => '';
+    reporter.getTestName = () => 'failure name';
+    reporter.formatShortError = () => '';
+
+    reporter.printTestCase('failed', {
+      result: () => ({
+        state: 'failed',
+        errors: [new Error('fail')],
+      }),
+      diagnostic: () => null,
+      task: {},
+    });
+
+    expect(reporter.log).toHaveBeenCalled();
+  });
+
   it('delegates to DefaultReporter for non-failed tests', () => {
     const superSpy = vi
       .spyOn(DefaultReporter.prototype, 'printTestCase')

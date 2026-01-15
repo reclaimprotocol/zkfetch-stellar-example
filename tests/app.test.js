@@ -248,6 +248,23 @@ describe('requestProof', () => {
       'Failed to generate Goal.com proof'
     );
   });
+
+  it('logs goal scores when extracted values are present', async () => {
+    zkFetchMock.mockResolvedValueOnce({
+      extractedParameterValues: {
+        team1: 'A',
+        team2: 'B',
+        score1: '1',
+        score2: '2',
+      },
+    });
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const { requestProof } = await import('../src/requestProof.js');
+    await requestProof('./src/proof.json', 'goal');
+
+    expect(logSpy).toHaveBeenCalled();
+    logSpy.mockRestore();
+  });
 });
 
 describe('verifyProof', () => {
