@@ -132,10 +132,44 @@ describe('requestProof', () => {
     );
   });
 
+  it('throws when output directory is missing', async () => {
+    fsMocks.existsSync.mockReturnValue(false);
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./missing/proof.json')).rejects.toThrow(
+      'Directory does not exist'
+    );
+  });
+
+  it('throws when output path is not a directory', async () => {
+    fsMocks.statSync.mockReturnValue({ isDirectory: () => false });
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json')).rejects.toThrow(
+      'Path is not a directory'
+    );
+  });
+
   it('throws for unknown proof type', async () => {
     const { requestProof } = await import('../src/requestProof.js');
     await expect(requestProof('./src/proof.json', 'unknown')).rejects.toThrow(
       'Unknown proof type'
+    );
+  });
+
+  it('throws when reclaim client cannot be created', async () => {
+    ReclaimClientMock.mockImplementationOnce(() => {
+      throw new Error('boom');
+    });
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'stellar')).rejects.toThrow(
+      'Failed to create Reclaim client'
+    );
+  });
+
+  it('throws when proof generation fails', async () => {
+    zkFetchMock.mockRejectedValueOnce(new Error('network down'));
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'stellar')).rejects.toThrow(
+      'Failed to generate proof'
     );
   });
 
@@ -162,6 +196,27 @@ describe('requestProof', () => {
       expect.any(String)
     );
   });
+
+  it('writes proof data and fails if saving throws', async () => {
+    fsMocks.writeFileSync.mockImplementationOnce(() => {
+      throw new Error('disk full');
+    });
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'stellar')).rejects.toThrow(
+      'Failed to save proof'
+    );
+  });
+
+  it('routes additional proof types through zkFetch', async () => {
+    const { requestProof } = await import('../src/requestProof.js');
+    await requestProof('./src/proof.json', 'forbes');
+
+    expect(zkFetchMock).toHaveBeenCalledWith(
+      CONFIG.API.FORBES_BILLIONAIRES,
+      expect.any(Object),
+      expect.any(Object)
+    );
+  });
 });
 
 describe('verifyProof', () => {
@@ -170,6 +225,52 @@ describe('verifyProof', () => {
     const { verifyProof } = await import('../src/verifyProof.js');
     await expect(verifyProof('./missing.json')).rejects.toThrow(
       'Proof file not found'
+    );
+  });
+
+  it('throws if wallet creation fails', async () => {
+    fromMnemonicMock.mockImplementationOnce(() => {
+      throw new Error('no wallet');
+    });
+    const { verifyProof } = await import('../src/verifyProof.js');
+    await expect(verifyProof('./src/proof.json')).rejects.toThrow(
+      'Failed to create Stellar wallet'
+    );
+  });
+
+  it('throws if proof signatures are missing', async () => {
+    fsMocks.readFileSync.mockImplementationOnce(() =>
+      JSON.stringify({ signatures: [] })
+    );
+    const { verifyProof } = await import('../src/verifyProof.js');
+    await expect(verifyProof('./src/proof.json')).rejects.toThrow(
+      'Invalid proof: missing signatures'
+    );
+  });
+
+  it('throws if proof data is invalid', async () => {
+    transformForOnchainMock.mockReturnValueOnce({
+      signedClaim: {
+        signatures: ['0x1234'],
+        claim: {
+          identifier: 'id',
+          owner: 'owner',
+          timestampS: 1,
+          epoch: 1,
+        },
+      },
+    });
+    const { verifyProof } = await import('../src/verifyProof.js');
+    await expect(verifyProof('./src/proof.json')).rejects.toThrow(
+      'Failed to prepare proof data'
+    );
+  });
+
+  it('throws if submitting transaction fails', async () => {
+    sendTransactionMock.mockRejectedValueOnce(new Error('rpc down'));
+    const { verifyProof } = await import('../src/verifyProof.js');
+    await expect(verifyProof('./src/proof.json')).rejects.toThrow(
+      'Failed to submit transaction'
     );
   });
 

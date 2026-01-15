@@ -5,8 +5,8 @@
 
 import * as dotenv from 'dotenv';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables without extra console output
+dotenv.config({ quiet: true });
 
 /**
  * Application configuration

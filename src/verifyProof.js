@@ -13,8 +13,8 @@ import StellarHDWallet from 'stellar-hd-wallet';
 import * as utils from './utils.js';
 import { CONFIG, validateEnvironment, getStellarServer } from './config.js';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables without extra console output
+dotenv.config({ quiet: true });
 
 // Validate environment on module load
 validateEnvironment();
