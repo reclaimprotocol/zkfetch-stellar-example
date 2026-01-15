@@ -1,22 +1,19 @@
 {
   "claimData": {
     "provider": "http",
-    "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"<div class=\\\"fco-match-team-and-score\\\">.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team1>.*?)</div>.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team2>.*?)</div>.*?<div class=\\\"fco-match-score\\\" data-side=\\\"team-a\\\">(?<score1>\\\\d+)</div>\\\\s*<div class=\\\"fco-match-score\\\" data-side=\\\"team-b\\\">(?<score2>\\\\d+)</div>\"}],\"responseRedactions\":[{\"regex\":\"<div class=\\\"fco-match-team-and-score\\\">.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team1>.*?)</div>.*?<div class=\\\"fco-team-name fco-long-name\\\">(?<team2>.*?)</div>.*?<div class=\\\"fco-match-score\\\" data-side=\\\"team-a\\\">(?<score1>\\\\d+)</div>\\\\s*<div class=\\\"fco-match-score\\\" data-side=\\\"team-b\\\">(?<score2>\\\\d+)</div>\"}],\"url\":\"https://www.goal.com/en-in/live-scores\"}",
+    "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\{\\\"stellar\\\":\\\\{\\\"usd\\\":(?<price>[\\\\d\\\\.]+)\\\\}\\\\}\"}],\"responseRedactions\":[],\"url\":\"https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1760539144,
-    "context": "{\"extractedParameters\":{\"score1\":\"4\",\"score2\":\"0\",\"team1\":\"Spain\",\"team2\":\"Bulgaria\"},\"providerHash\":\"0x52308bec51424e0cf27ed229db12285840bc7b58abe159f2af02ae9c85846a2b\"}",
-    "identifier": "0x9c304f482e0b645774d2ab691975e16bfdeaf0bcd300ec2966216fcdb2a1fd07",
+    "timestampS": 1768472357,
+    "context": "{\"extractedParameters\":{\"price\":\"0.23202\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
+    "identifier": "0x24fe9987b4d35929c82a9d4f3319a9440f82a97abea0773044891855b411377c",
     "epoch": 1
   },
-  "identifier": "0x9c304f482e0b645774d2ab691975e16bfdeaf0bcd300ec2966216fcdb2a1fd07",
+  "identifier": "0x24fe9987b4d35929c82a9d4f3319a9440f82a97abea0773044891855b411377c",
   "signatures": [
-    "0x637efc4a6bf74cd7b8530ab45da3534083026797287e406c703071e1ab1ab3c14b25159e6bbb78cb0ca1742073f197f8fd0db6038767205b4055ace9f73a373c1c"
+    "0x318dd9b9c83b7d594c3885c583637ebe2e4b13ae6d35af7afe7bb30b5088e31d4371e558a19a9f3ee5036249d0c81425465ebb3dbe128036047592a7f79d461f1b"
   ],
   "extractedParameterValues": {
-    "score1": "4",
-    "score2": "0",
-    "team1": "Spain",
-    "team2": "Bulgaria"
+    "price": "0.23202"
   },
   "witnesses": [
     {
