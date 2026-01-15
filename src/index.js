@@ -208,7 +208,7 @@ async function main() {
 }
 
 // Export for use as module
-export { ZkFetchStellarApp };
+export { ZkFetchStellarApp, main };
 
 // Run CLI if executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {

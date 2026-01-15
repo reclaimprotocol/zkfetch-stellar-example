@@ -217,6 +217,37 @@ describe('requestProof', () => {
       expect.any(Object)
     );
   });
+
+  it('routes remaining proof types', async () => {
+    const { requestProof } = await import('../src/requestProof.js');
+    await requestProof('./src/proof.json', 'trading-economics');
+    await requestProof('./src/proof.json', 'accuweather');
+    await requestProof('./src/proof.json', 'goal');
+
+    expect(zkFetchMock).toHaveBeenCalledWith(
+      CONFIG.API.TRADING_ECONOMICS_COUNTRIES,
+      expect.any(Object),
+      expect.any(Object)
+    );
+    expect(zkFetchMock).toHaveBeenCalledWith(
+      CONFIG.API.ACCUWEATHER_NYC,
+      expect.any(Object),
+      expect.any(Object)
+    );
+    expect(zkFetchMock).toHaveBeenCalledWith(
+      CONFIG.API.GOAL_LIVE_SCORES,
+      expect.any(Object),
+      expect.any(Object)
+    );
+  });
+
+  it('throws when goal proof generation fails', async () => {
+    zkFetchMock.mockRejectedValueOnce(new Error('goal fail'));
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'goal')).rejects.toThrow(
+      'Failed to generate Goal.com proof'
+    );
+  });
 });
 
 describe('verifyProof', () => {
@@ -245,6 +276,14 @@ describe('verifyProof', () => {
     const { verifyProof } = await import('../src/verifyProof.js');
     await expect(verifyProof('./src/proof.json')).rejects.toThrow(
       'Invalid proof: missing signatures'
+    );
+  });
+
+  it('throws if proof file is invalid JSON', async () => {
+    fsMocks.readFileSync.mockImplementationOnce(() => '{bad json');
+    const { verifyProof } = await import('../src/verifyProof.js');
+    await expect(verifyProof('./src/proof.json')).rejects.toThrow(
+      'Failed to load proof'
     );
   });
 
@@ -308,6 +347,35 @@ describe('ZkFetchStellarApp', () => {
     );
   });
 
+  it('routes additional app methods to helpers', async () => {
+    vi.resetModules();
+    const requestProofMock = vi.fn();
+    const verifyProofMock = vi.fn();
+
+    vi.doMock('../src/requestProof.js', () => ({
+      requestProof: requestProofMock,
+    }));
+    vi.doMock('../src/verifyProof.js', () => ({
+      verifyProof: verifyProofMock,
+    }));
+
+    const { ZkFetchStellarApp } = await import('../src/index.js');
+    const app = new ZkFetchStellarApp();
+
+    await app.requestForbesProof('./forbes.json');
+    await app.requestAccuWeatherProof('./weather.json');
+    await app.requestGoalProof('./goal.json');
+    await app.verifyProofOnStellar('./proof.json');
+
+    expect(requestProofMock).toHaveBeenCalledWith('./forbes.json', 'forbes');
+    expect(requestProofMock).toHaveBeenCalledWith(
+      './weather.json',
+      'accuweather'
+    );
+    expect(requestProofMock).toHaveBeenCalledWith('./goal.json', 'goal');
+    expect(verifyProofMock).toHaveBeenCalledWith('./proof.json');
+  });
+
   it('runs complete workflow successfully', async () => {
     vi.resetModules();
     const requestProofMock = vi.fn().mockResolvedValue({ ok: true });
@@ -349,6 +417,24 @@ describe('ZkFetchStellarApp', () => {
 
     expect(result).toEqual({ error: 'fail', success: false });
     expect(verifyProofMock).not.toHaveBeenCalled();
+  });
+
+  it('prints app info', async () => {
+    vi.resetModules();
+    vi.doMock('../src/requestProof.js', () => ({
+      requestProof: vi.fn(),
+    }));
+    vi.doMock('../src/verifyProof.js', () => ({
+      verifyProof: vi.fn(),
+    }));
+
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const { ZkFetchStellarApp } = await import('../src/index.js');
+    const app = new ZkFetchStellarApp();
+    app.displayInfo();
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('zkFetch'));
+    logSpy.mockRestore();
   });
 });
 

@@ -170,6 +170,10 @@ describe('Utility Functions Tests', () => {
         'Signature must be a valid string'
       );
     });
+
+    it('should throw error for invalid recovery ID', () => {
+      expect(() => utils.getRecId('0x00')).toThrow('Invalid recovery ID');
+    });
   });
 
   describe('formatSignature', () => {
@@ -254,6 +258,23 @@ describe('Utility Functions Tests', () => {
       expect(() => utils.validateProofStructure({})).toThrow(
         'Missing required proof property'
       );
+    });
+
+    it('should throw error for missing signatures or parameters', () => {
+      expect(() =>
+        utils.validateProofStructure({
+          claimData: {},
+          signatures: [],
+          extractedParameterValues: {},
+        })
+      ).toThrow('Proof must have at least one signature');
+      expect(() =>
+        utils.validateProofStructure({
+          claimData: {},
+          signatures: ['0x123'],
+          extractedParameterValues: 'bad',
+        })
+      ).toThrow('Proof must have extractedParameterValues object');
     });
   });
 });

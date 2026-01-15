@@ -134,6 +134,15 @@ async function setup() {
   }
 }
 
+export {
+  createEnvFile,
+  downloadZkFiles,
+  checkDependencies,
+  installDependencies,
+  validateSetup,
+  setup,
+};
+
 // Run setup if executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   setup().catch(console.error);

@@ -199,6 +199,9 @@ async function main() {
   }
 }
 
+// Export for testing
+export { main };
+
 // Run if this file is executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();
