@@ -280,5 +280,41 @@ describe('index CLI', () => {
       'accuweather'
     );
   });
+
+  it('handles request-trading-economics command', async () => {
+    vi.resetModules();
+    const requestProofMock = vi.fn();
+    vi.doMock('../src/requestProof.js', () => ({
+      requestProof: requestProofMock,
+    }));
+    vi.doMock('../src/verifyProof.js', () => ({
+      verifyProof: vi.fn(),
+    }));
+    process.argv = ['node', 'index.js', 'request-trading-economics'];
+    const { main } = await import('../src/index.js');
+    await main();
+    expect(requestProofMock).toHaveBeenCalledWith(
+      undefined,
+      'trading-economics'
+    );
+  });
+
+  it('handles request-forbes command', async () => {
+    vi.resetModules();
+    const requestProofMock = vi.fn();
+    vi.doMock('../src/requestProof.js', () => ({
+      requestProof: requestProofMock,
+    }));
+    vi.doMock('../src/verifyProof.js', () => ({
+      verifyProof: vi.fn(),
+    }));
+    process.argv = ['node', 'index.js', 'request-forbes'];
+    const { main } = await import('../src/index.js');
+    await main();
+    expect(requestProofMock).toHaveBeenCalledWith(
+      undefined,
+      'forbes'
+    );
+  });
 });
 

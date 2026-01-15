@@ -265,6 +265,55 @@ describe('requestProof', () => {
     expect(logSpy).toHaveBeenCalled();
     logSpy.mockRestore();
   });
+
+  it('logs AccuWeather city and temperature when present', async () => {
+    zkFetchMock.mockResolvedValueOnce({
+      extractedParameterValues: {
+        city: 'New York',
+        tempInC: '20',
+      },
+    });
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const { requestProof } = await import('../src/requestProof.js');
+    await requestProof('./src/proof.json', 'accuweather');
+
+    expect(logSpy).toHaveBeenCalled();
+    logSpy.mockRestore();
+  });
+
+  it('throws when AccuWeather proof generation fails', async () => {
+    zkFetchMock.mockRejectedValueOnce(new Error('accu fail'));
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'accuweather')).rejects.toThrow(
+      'Failed to generate AccuWeather proof'
+    );
+  });
+
+  it('logs Forbes entries only when all fields are present', async () => {
+    zkFetchMock.mockResolvedValueOnce({
+      extractedParameterValues: {
+        name1: 'Alice',
+        rank1: '1',
+        worth1: '100',
+        name2: 'Bob',
+        rank2: '2',
+      },
+    });
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const { requestProof } = await import('../src/requestProof.js');
+    await requestProof('./src/proof.json', 'forbes');
+
+    expect(logSpy).toHaveBeenCalled();
+    logSpy.mockRestore();
+  });
+
+  it('throws when Forbes proof generation fails', async () => {
+    zkFetchMock.mockRejectedValueOnce(new Error('forbes fail'));
+    const { requestProof } = await import('../src/requestProof.js');
+    await expect(requestProof('./src/proof.json', 'forbes')).rejects.toThrow(
+      'Failed to generate Forbes proof'
+    );
+  });
 });
 
 describe('verifyProof', () => {
