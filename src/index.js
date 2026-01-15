@@ -23,7 +23,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<Object>} The generated proof
    */
   async requestStellarPriceProof(outputPath) {
-    console.log('🌟 Requesting Stellar price proof...');
+    console.log('Requesting Stellar price proof...');
     return await requestProof(outputPath, 'stellar');
   }
 
@@ -33,7 +33,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<Object>} The generated proof
    */
   async requestTradingEconomicsProof(outputPath) {
-    console.log('🌍 Requesting Trading Economics countries GDP proof...');
+    console.log('Requesting Trading Economics countries GDP proof...');
     return await requestProof(outputPath, 'trading-economics');
   }
 
@@ -43,7 +43,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<Object>} The generated proof
    */
   async requestForbesProof(outputPath) {
-    console.log('💰 Requesting Forbes billionaires proof...');
+    console.log('Requesting Forbes billionaires proof...');
     return await requestProof(outputPath, 'forbes');
   }
 
@@ -53,7 +53,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<Object>} The generated proof
    */
   async requestAccuWeatherProof(outputPath) {
-    console.log('🌤️ Requesting AccuWeather NYC proof...');
+    console.log('Requesting AccuWeather NYC proof...');
     return await requestProof(outputPath, 'accuweather');
   }
 
@@ -63,7 +63,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<Object>} The generated proof
    */
   async requestGoalProof(outputPath) {
-    console.log('⚽ Requesting Goal.com live scores proof...');
+    console.log('Requesting Goal.com live scores proof...');
     return await requestProof(outputPath, 'goal');
   }
 
@@ -73,7 +73,7 @@ class ZkFetchStellarApp {
    * @returns {Promise<string>} Transaction hash
    */
   async verifyProofOnStellar(proofPath) {
-    console.log('🔍 Verifying proof on Stellar blockchain...');
+    console.log('Verifying proof on Stellar blockchain...');
     return await verifyProof(proofPath);
   }
 
@@ -84,7 +84,7 @@ class ZkFetchStellarApp {
    */
   async runCompleteWorkflow(proofPath = CONFIG.PATHS.PROOF_FILE) {
     try {
-      console.log('🚀 Starting complete zkFetch workflow...');
+      console.log('Starting complete zkFetch workflow...');
 
       // Step 1: Request proof
       const proof = await this.requestStellarPriceProof(proofPath);
@@ -92,7 +92,7 @@ class ZkFetchStellarApp {
       // Step 2: Verify proof
       const txHash = await this.verifyProofOnStellar(proofPath);
 
-      console.log('✅ Complete workflow finished successfully!');
+      console.log('Complete workflow finished successfully!');
 
       return {
         proof,
@@ -100,7 +100,7 @@ class ZkFetchStellarApp {
         success: true,
       };
     } catch (error) {
-      console.error('❌ Workflow failed:', error.message);
+      console.error('Workflow failed:', error.message);
       return {
         error: error.message,
         success: false,
@@ -113,29 +113,29 @@ class ZkFetchStellarApp {
    */
   displayInfo() {
     console.log(`
-🌟 zkFetch Stellar Example
-========================
+zkFetch Stellar Example
+======================
 
 This application demonstrates zero-knowledge proof generation and verification
 using the Reclaim Protocol and Stellar blockchain.
 
 Features:
-• Generate ZK proofs for cryptocurrency price data (Stellar)
-• Generate ZK proofs for economic data (Trading Economics countries GDP)
-• Generate ZK proofs for billionaires data (Forbes real-time billionaires)
-• Generate ZK proofs for weather data (AccuWeather NYC)
-• Generate ZK proofs for sports data (Goal.com live scores)
-• Verify proofs on Stellar testnet using Soroban contracts
-• Complete workflow automation
+- Generate ZK proofs for cryptocurrency price data (Stellar)
+- Generate ZK proofs for economic data (Trading Economics countries GDP)
+- Generate ZK proofs for billionaires data (Forbes real-time billionaires)
+- Generate ZK proofs for weather data (AccuWeather NYC)
+- Generate ZK proofs for sports data (Goal.com live scores)
+- Verify proofs on Stellar testnet using Soroban contracts
+- Complete workflow automation
 
 Configuration:
-• Network: ${this.config.TESTNET_DETAILS.network}
-• Contract: ${this.config.STELLAR.CONTRACT_ID}
-• Stellar API: ${this.config.API.COINGECKO_STELLAR_PRICE}
-• Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
-• Forbes API: ${this.config.API.FORBES_BILLIONAIRES}
-• AccuWeather API: ${this.config.API.ACCUWEATHER_NYC}
-• Goal.com API: ${this.config.API.GOAL_LIVE_SCORES}
+- Network: ${this.config.TESTNET_DETAILS.network}
+- Contract: ${this.config.STELLAR.CONTRACT_ID}
+- Stellar API: ${this.config.API.COINGECKO_STELLAR_PRICE}
+- Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
+- Forbes API: ${this.config.API.FORBES_BILLIONAIRES}
+- AccuWeather API: ${this.config.API.ACCUWEATHER_NYC}
+- Goal.com API: ${this.config.API.GOAL_LIVE_SCORES}
 
 Usage:
   npm run request-proof              # Generate a new Stellar price proof

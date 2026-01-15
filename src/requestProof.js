@@ -66,9 +66,9 @@ async function generateStellarPriceProof(reclaimClient) {
       }
     );
 
-    console.log('✅ Proof generated successfully');
+    console.log('Proof generated successfully');
     console.log(
-      `📊 Extracted price: $${proof.extractedParameterValues?.price || 'N/A'}`
+      `Extracted price: $${proof.extractedParameterValues?.price || 'N/A'}`
     );
 
     return proof;
@@ -119,8 +119,8 @@ async function generateTradingEconomicsProof(reclaimClient) {
       }
     );
 
-    console.log('✅ Trading Economics proof generated successfully');
-    console.log('📊 Extracted countries and GDP data:');
+    console.log('Trading Economics proof generated successfully');
+    console.log('Extracted countries and GDP data:');
     
     const extractedValues = proof.extractedParameterValues || {};
     for (let i = 1; i <= 5; i++) {
@@ -177,8 +177,8 @@ async function generateForbesProof(reclaimClient) {
       }
     );
 
-    console.log('✅ Forbes proof generated successfully');
-    console.log('💰 Extracted billionaires data:');
+    console.log('Forbes proof generated successfully');
+    console.log('Extracted billionaires data:');
     
     const extractedValues = proof.extractedParameterValues || {};
     for (let i = 1; i <= 5; i++) {
@@ -244,8 +244,8 @@ async function generateAccuWeatherProof(reclaimClient) {
       }
     );
 
-    console.log('✅ AccuWeather proof generated successfully');
-    console.log('🌤️ Extracted weather data:');
+    console.log('AccuWeather proof generated successfully');
+    console.log('Extracted weather data:');
     
     const extractedValues = proof.extractedParameterValues || {};
     const city = extractedValues.city;
@@ -255,7 +255,7 @@ async function generateAccuWeatherProof(reclaimClient) {
       console.log(`   City: ${city}`);
     }
     if (tempInC) {
-      console.log(`   Temperature: ${tempInC}°C`);
+      console.log(`   Temperature: ${tempInC} C`);
     }
 
     return proof;
@@ -295,8 +295,8 @@ async function generateGoalProof(reclaimClient) {
       }
     );
 
-    console.log('✅ Goal.com proof generated successfully');
-    console.log('⚽ Extracted live scores data:');
+    console.log('Goal.com proof generated successfully');
+    console.log('Extracted live scores data:');
     
     const extractedValues = proof.extractedParameterValues || {};
     const team1 = extractedValues.team1;
@@ -323,7 +323,7 @@ function saveProof(proof, outputPath) {
   try {
     const proofData = JSON.stringify(proof, null, 2);
     fs.writeFileSync(outputPath, proofData);
-    console.log(`💾 Proof saved to: ${outputPath}`);
+    console.log(`Proof saved to: ${outputPath}`);
   } catch (error) {
     throw new Error(`Failed to save proof: ${error.message}`);
   }
@@ -336,7 +336,7 @@ function saveProof(proof, outputPath) {
  */
 export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofType = 'stellar') {
   try {
-    console.log(`🚀 Starting ${proofType} proof request process...`);
+    console.log(`Starting ${proofType} proof request process...`);
 
     // Validate inputs
     validateOutputPath(outputPath);
@@ -369,10 +369,10 @@ export async function requestProof(outputPath = CONFIG.PATHS.PROOF_FILE, proofTy
     // Save proof
     saveProof(proof, outputPath);
 
-    console.log('✅ Proof request completed successfully!');
+    console.log('Proof request completed successfully!');
     return proof;
   } catch (error) {
-    console.error('❌ Error requesting proof:', error.message);
+    console.error('Error requesting proof:', error.message);
     throw error;
   }
 }
@@ -391,7 +391,7 @@ async function main() {
     await requestProof(outputPath, proofType);
     process.exit(0);
   } catch (error) {
-    console.error('❌ Fatal error:', error.message);
+    console.error('Fatal error:', error.message);
     process.exit(1);
   }
 }

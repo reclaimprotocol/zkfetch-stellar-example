@@ -16,21 +16,21 @@ function createEnvFile() {
   const envPath = '.env';
   
   if (fs.existsSync(envPath)) {
-    console.log('✅ .env file already exists');
+    console.log('.env file already exists');
     return;
   }
   
   if (!fs.existsSync(envExamplePath)) {
-    console.log('❌ .env.example file not found');
+    console.log('.env.example file not found');
     return;
   }
   
   try {
     fs.copyFileSync(envExamplePath, envPath);
-    console.log('✅ Created .env file from template');
-    console.log('⚠️  Please edit .env file with your actual seedphrase');
+    console.log('Created .env file from template');
+    console.log('Please edit .env file with your actual seedphrase');
   } catch (error) {
-    console.error('❌ Failed to create .env file:', error.message);
+    console.error('Failed to create .env file:', error.message);
   }
 }
 
@@ -39,11 +39,11 @@ function createEnvFile() {
  */
 function downloadZkFiles() {
   try {
-    console.log('📥 Downloading ZK files...');
+    console.log('Downloading ZK files...');
     execSync('npm run download-zk-files', { stdio: 'inherit' });
-    console.log('✅ ZK files downloaded successfully');
+    console.log('ZK files downloaded successfully');
   } catch (error) {
-    console.error('❌ Failed to download ZK files:', error.message);
+    console.error('Failed to download ZK files:', error.message);
   }
 }
 
@@ -52,12 +52,12 @@ function downloadZkFiles() {
  */
 function checkDependencies() {
   try {
-    console.log('🔍 Checking dependencies...');
+    console.log('Checking dependencies...');
     execSync('npm list --depth=0', { stdio: 'pipe' });
-    console.log('✅ All dependencies are installed');
+    console.log('All dependencies are installed');
     return true;
   } catch (error) {
-    console.log('❌ Some dependencies may be missing');
+    console.log('Some dependencies may be missing');
     return false;
   }
 }
@@ -67,11 +67,11 @@ function checkDependencies() {
  */
 function installDependencies() {
   try {
-    console.log('📦 Installing dependencies...');
+    console.log('Installing dependencies...');
     execSync('npm install', { stdio: 'inherit' });
-    console.log('✅ Dependencies installed successfully');
+    console.log('Dependencies installed successfully');
   } catch (error) {
-    console.error('❌ Failed to install dependencies:', error.message);
+    console.error('Failed to install dependencies:', error.message);
   }
 }
 
@@ -86,14 +86,14 @@ function validateSetup() {
     { name: '.env file', path: '.env' },
   ];
   
-  console.log('🔍 Validating setup...');
+  console.log('Validating setup...');
   
   let allValid = true;
   for (const check of checks) {
     if (fs.existsSync(check.path)) {
-      console.log(`✅ ${check.name} exists`);
+      console.log(`${check.name} exists`);
     } else {
-      console.log(`❌ ${check.name} missing`);
+      console.log(`${check.name} missing`);
       allValid = false;
     }
   }
@@ -105,7 +105,7 @@ function validateSetup() {
  * Main setup function
  */
 async function setup() {
-  console.log('🚀 Setting up zkfetch-stellar-example...\n');
+  console.log('Setting up zkfetch-stellar-example...\n');
   
   // Check and install dependencies
   if (!checkDependencies()) {
@@ -123,13 +123,13 @@ async function setup() {
   
   console.log('\n' + '='.repeat(50));
   if (isValid) {
-    console.log('✅ Setup completed successfully!');
+    console.log('Setup completed successfully!');
     console.log('\nNext steps:');
     console.log('1. Edit .env file with your Stellar seedphrase');
     console.log('2. Run: npm run request-proof');
     console.log('3. Run: npm run verify-proof');
   } else {
-    console.log('❌ Setup completed with issues');
+    console.log('Setup completed with issues');
     console.log('Please check the missing files and try again');
   }
 }

@@ -55,7 +55,7 @@ function loadProof(proofPath) {
     }
 
     const proof = Reclaim.transformForOnchain(proofJson);
-    console.log('✅ Proof loaded and validated');
+    console.log('Proof loaded and validated');
 
     return proof;
   } catch (error) {
@@ -100,7 +100,7 @@ async function submitVerificationTransaction(keypair, proofData) {
     const publicKey = keypair.publicKey();
 
     console.log(
-      `🔗 Connecting to Stellar network: ${CONFIG.TESTNET_DETAILS.networkUrl}`
+      `Connecting to Stellar network: ${CONFIG.TESTNET_DETAILS.networkUrl}`
     );
 
     // Load account
@@ -108,7 +108,7 @@ async function submitVerificationTransaction(keypair, proofData) {
     const account = new StellarSdk.Account(publicKey, accountResponse.sequence);
 
     console.log(
-      `📊 Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
+      `Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
     );
 
     // Create contract instance
@@ -138,16 +138,16 @@ async function submitVerificationTransaction(keypair, proofData) {
     const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR.SOROBAN_RPC_URL);
     const preparedTransaction = await rpcServer.prepareTransaction(tx);
 
-    console.log('✍️ Signing transaction...');
+    console.log('Signing transaction...');
     preparedTransaction.sign(keypair);
 
     // Submit transaction
-    console.log('📤 Submitting transaction to blockchain...');
+    console.log('Submitting transaction to blockchain...');
     const sendResult = await rpcServer.sendTransaction(preparedTransaction);
 
-    console.log('✅ Transaction submitted successfully!');
+    console.log('Transaction submitted successfully!');
     console.log(
-      `🔗 Transaction Link: ${CONFIG.STELLAR.EXPLORER_LINK}${sendResult.hash}`
+      `Transaction Link: ${CONFIG.STELLAR.EXPLORER_LINK}${sendResult.hash}`
     );
 
     return sendResult.hash;
@@ -162,11 +162,11 @@ async function submitVerificationTransaction(keypair, proofData) {
  */
 export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
   try {
-    console.log('🚀 Starting proof verification process...');
+    console.log('Starting proof verification process...');
 
     // Create wallet
     const { keypair } = createStellarWallet();
-    console.log(`👛 Wallet address: ${keypair.publicKey()}`);
+    console.log(`Wallet address: ${keypair.publicKey()}`);
 
     // Load proof
     const proof = loadProof(proofPath);
@@ -177,10 +177,10 @@ export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
     // Submit transaction
     const txHash = await submitVerificationTransaction(keypair, proofData);
 
-    console.log('✅ Proof verification completed successfully!');
+    console.log('Proof verification completed successfully!');
     return txHash;
   } catch (error) {
-    console.error('❌ Error verifying proof:', error.message);
+    console.error('Error verifying proof:', error.message);
     throw error;
   }
 }
@@ -194,7 +194,7 @@ async function main() {
     await verifyProof(proofPath);
     process.exit(0);
   } catch (error) {
-    console.error('❌ Fatal error:', error.message);
+    console.error('Fatal error:', error.message);
     process.exit(1);
   }
 }

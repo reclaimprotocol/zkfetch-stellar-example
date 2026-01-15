@@ -19,7 +19,7 @@ describe('Proof Validation Tests', () => {
       const data = fs.readFileSync('./src/proof.json');
       proof = JSON.parse(data);
     } catch (error) {
-      console.warn('⚠️ Proof file not found, some tests will be skipped');
+      console.warn('Warning: proof file not found, some tests will be skipped');
       proof = null;
     }
   });
@@ -27,7 +27,7 @@ describe('Proof Validation Tests', () => {
   describe('Proof Structure Validation', () => {
     it('should have required fields', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -40,7 +40,7 @@ describe('Proof Validation Tests', () => {
 
     it('should have a valid positive price', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -51,7 +51,7 @@ describe('Proof Validation Tests', () => {
 
     it('should have non-empty witnesses array with valid entries', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -74,7 +74,7 @@ describe('Proof Validation Tests', () => {
   describe('Proof Signature Validation', () => {
     it('should verify the signature matches the owner', async () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -98,7 +98,7 @@ describe('Proof Validation Tests', () => {
   describe('Proof Data Validation', () => {
     it('should have a valid UNIX timestamp not in the future', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -112,7 +112,7 @@ describe('Proof Validation Tests', () => {
 
     it('should have a valid provider (http or https)', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -123,7 +123,7 @@ describe('Proof Validation Tests', () => {
 
     it('should have a positive integer epoch', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
@@ -134,7 +134,7 @@ describe('Proof Validation Tests', () => {
 
     it('should parse parameters JSON and contain expected keys', () => {
       if (!proof) {
-        console.log('⏭️ Skipping test - no proof file');
+        console.log('Skipping test - no proof file');
         return;
       }
 
