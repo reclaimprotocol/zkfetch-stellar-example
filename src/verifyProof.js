@@ -210,7 +210,7 @@ async function main() {
 }
 
 // Export for testing
-export { main };
+export { main, bytesN };
 
 // Run if this file is executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {

@@ -150,6 +150,52 @@ describe('requestProof CLI', () => {
   });
 });
 
+describe('bytesN function', () => {
+  it('accepts Uint8Array input', async () => {
+    vi.resetModules();
+    vi.doMock('../src/config.js', async () => {
+      const actual = await vi.importActual('../src/config.js');
+      return {
+        ...actual,
+        validateEnvironment: () => {},
+      };
+    });
+    const { bytesN } = await import('../src/verifyProof.js');
+    const uint8 = new Uint8Array(32);
+    const result = bytesN(uint8, 32);
+    expect(result).toBeDefined();
+  });
+
+  it('throws when buffer is not Buffer or Uint8Array', async () => {
+    vi.resetModules();
+    vi.doMock('../src/config.js', async () => {
+      const actual = await vi.importActual('../src/config.js');
+      return {
+        ...actual,
+        validateEnvironment: () => {},
+      };
+    });
+    const { bytesN } = await import('../src/verifyProof.js');
+    expect(() => bytesN('invalid', 32)).toThrow('Expected Buffer or Uint8Array');
+    expect(() => bytesN(123, 32)).toThrow('Expected Buffer or Uint8Array');
+    expect(() => bytesN({}, 32)).toThrow('Expected Buffer or Uint8Array');
+  });
+
+  it('throws when buffer length does not match expected length', async () => {
+    vi.resetModules();
+    vi.doMock('../src/config.js', async () => {
+      const actual = await vi.importActual('../src/config.js');
+      return {
+        ...actual,
+        validateEnvironment: () => {},
+      };
+    });
+    const { bytesN } = await import('../src/verifyProof.js');
+    const buf = Buffer.alloc(16);
+    expect(() => bytesN(buf, 32)).toThrow('Expected 32 bytes, got 16');
+  });
+});
+
 describe('verifyProof CLI', () => {
   it('runs CLI and exits with code 1 on error', async () => {
     vi.resetModules();
@@ -166,6 +212,146 @@ describe('verifyProof CLI', () => {
     const { main } = await import('../src/verifyProof.js');
     await main();
     expect(exitSpy).toHaveBeenCalledWith(1);
+  });
+
+  it('runs CLI and exits with code 0 on success', async () => {
+    vi.resetModules();
+    vi.doMock('../src/config.js', async () => {
+      const actual = await vi.importActual('../src/config.js');
+      return {
+        ...actual,
+        validateEnvironment: () => {},
+      };
+    });
+    vi.doMock('stellar-hd-wallet', () => ({
+      default: {
+        fromMnemonic: vi.fn().mockReturnValue({
+          getSecret: vi.fn().mockReturnValue('SSECRET'),
+        }),
+      },
+    }));
+    vi.doMock('stellar-sdk', () => ({
+      default: {
+        Keypair: {
+          fromSecret: vi.fn(() => ({
+            publicKey: () => 'GTESTPUBLICKEY',
+          })),
+        },
+        Contract: class {
+          call(...args) {
+            return contractCallMock(...args);
+          }
+        },
+        TransactionBuilder: class {
+          constructor() {
+            this.addOperation = vi.fn().mockReturnThis();
+            this.setTimeout = vi.fn().mockReturnThis();
+            this.build = vi.fn().mockReturnValue({});
+          }
+        },
+        TimeoutInfinite: 'TimeoutInfinite',
+        nativeToScVal: vi.fn((value) => value),
+        rpc: {
+          Server: class {
+            constructor() {
+              this.prepareTransaction = prepareTransactionMock;
+              this.sendTransaction = sendTransactionMock;
+              this.getAccount = vi.fn().mockResolvedValue({ sequence: '12345' });
+            }
+          },
+        },
+      },
+    }));
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {});
+    fsMocks.existsSync.mockReturnValue(true);
+    fsMocks.readFileSync.mockReturnValue(JSON.stringify({ signatures: ['0xabc'] }));
+    transformForOnchainMock.mockReturnValue({
+      signedClaim: {
+        signatures: [`0x${'a'.repeat(128)}1b`],
+        claim: {
+          identifier: 'id',
+          owner: 'owner',
+          timestampS: 1,
+          epoch: 1,
+        },
+      },
+    });
+    prepareTransactionMock.mockResolvedValue({ sign: vi.fn() });
+    sendTransactionMock.mockResolvedValue({ hash: 'txhash' });
+    process.argv = ['node', 'verifyProof.js', './proof.json'];
+    const { main } = await import('../src/verifyProof.js');
+    await main();
+    expect(exitSpy).toHaveBeenCalledWith(0);
+  });
+
+  it('uses default proof path when no CLI argument provided', async () => {
+    vi.resetModules();
+    vi.doMock('../src/config.js', async () => {
+      const actual = await vi.importActual('../src/config.js');
+      return {
+        ...actual,
+        validateEnvironment: () => {},
+      };
+    });
+    vi.doMock('stellar-hd-wallet', () => ({
+      default: {
+        fromMnemonic: vi.fn().mockReturnValue({
+          getSecret: vi.fn().mockReturnValue('SSECRET'),
+        }),
+      },
+    }));
+    vi.doMock('stellar-sdk', () => ({
+      default: {
+        Keypair: {
+          fromSecret: vi.fn(() => ({
+            publicKey: () => 'GTESTPUBLICKEY',
+          })),
+        },
+        Contract: class {
+          call(...args) {
+            return contractCallMock(...args);
+          }
+        },
+        TransactionBuilder: class {
+          constructor() {
+            this.addOperation = vi.fn().mockReturnThis();
+            this.setTimeout = vi.fn().mockReturnThis();
+            this.build = vi.fn().mockReturnValue({});
+          }
+        },
+        TimeoutInfinite: 'TimeoutInfinite',
+        nativeToScVal: vi.fn((value) => value),
+        rpc: {
+          Server: class {
+            constructor() {
+              this.prepareTransaction = prepareTransactionMock;
+              this.sendTransaction = sendTransactionMock;
+              this.getAccount = vi.fn().mockResolvedValue({ sequence: '12345' });
+            }
+          },
+        },
+      },
+    }));
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {});
+    fsMocks.existsSync.mockReturnValue(true);
+    fsMocks.readFileSync.mockReturnValue(JSON.stringify({ signatures: ['0xabc'] }));
+    transformForOnchainMock.mockReturnValue({
+      signedClaim: {
+        signatures: [`0x${'a'.repeat(128)}1b`],
+        claim: {
+          identifier: 'id',
+          owner: 'owner',
+          timestampS: 1,
+          epoch: 1,
+        },
+      },
+    });
+    prepareTransactionMock.mockResolvedValue({ sign: vi.fn() });
+    sendTransactionMock.mockResolvedValue({ hash: 'txhash' });
+    process.argv = ['node', 'verifyProof.js'];
+    const { main } = await import('../src/verifyProof.js');
+    await main();
+    expect(exitSpy).toHaveBeenCalledWith(0);
   });
 });
 
