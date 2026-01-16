@@ -5,19 +5,31 @@
  * using Soroban smart contracts.
  */
 
-import * as StellarSdk from '@stellar/stellar-sdk';
+import StellarSdk from 'stellar-sdk';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as Reclaim from '@reclaimprotocol/js-sdk';
 import StellarHDWallet from 'stellar-hd-wallet';
 import * as utils from './utils.js';
-import { CONFIG, validateEnvironment, getStellarServer } from './config.js';
+import { CONFIG, validateEnvironment } from './config.js';
 
 // Load environment variables without extra console output
 dotenv.config({ quiet: true });
 
 // Validate environment on module load
 validateEnvironment();
+
+function bytesN(buffer, length) {
+  if (!(buffer instanceof Buffer || buffer instanceof Uint8Array)) {
+    throw new Error('Expected Buffer or Uint8Array');
+  }
+
+  if (buffer.length !== length) {
+    throw new Error(`Expected ${length} bytes, got ${buffer.length}`);
+  }
+
+  return StellarSdk.nativeToScVal(Buffer.from(buffer), { type: 'bytes' });
+}
 
 /**
  * Creates a Stellar wallet from the seedphrase
@@ -96,7 +108,8 @@ function prepareProofData(proof) {
  */
 async function submitVerificationTransaction(keypair, proofData) {
   try {
-    const server = await getStellarServer();
+    const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR.SOROBAN_RPC_URL);
+    // const server = await getStellarServer();
     const publicKey = keypair.publicKey();
 
     console.log(
@@ -104,18 +117,18 @@ async function submitVerificationTransaction(keypair, proofData) {
     );
 
     // Load account
-    const accountResponse = await server.loadAccount(publicKey);
-    const account = new StellarSdk.Account(publicKey, accountResponse.sequence);
+    const accountResponse = await rpcServer.getAccount(publicKey);
+    // const account = new StellarSdk.Account(publicKey, accountResponse.sequence);
 
-    console.log(
-      `Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
-    );
+    // console.log(
+    //   `Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
+    // );
 
     // Create contract instance
     const contract = new StellarSdk.Contract(CONFIG.STELLAR.CONTRACT_ID);
 
     // Build transaction
-    const txBuilder = new StellarSdk.TransactionBuilder(account, {
+    const txBuilder = new StellarSdk.TransactionBuilder(accountResponse, {
       fee: CONFIG.STELLAR.BASE_FEE,
       networkPassphrase: CONFIG.TESTNET_DETAILS.networkPassphrase,
     });
@@ -123,19 +136,16 @@ async function submitVerificationTransaction(keypair, proofData) {
     const tx = txBuilder
       .addOperation(
         contract.call(
-          CONFIG.STELLAR.FUNCTION_NAME,
-          ...[
-            StellarSdk.nativeToScVal(proofData.message, { type: 'bytes' }),
-            StellarSdk.nativeToScVal(proofData.signature, { type: 'bytes' }),
-            StellarSdk.nativeToScVal(proofData.recId, { type: 'u32' }),
-          ]
-        )
+    CONFIG.STELLAR.FUNCTION_NAME,
+    bytesN(proofData.message, 32),
+    bytesN(proofData.signature.slice(0, 64), 64),
+    StellarSdk.nativeToScVal(proofData.recId, { type: 'u32' })
+  )
       )
       .setTimeout(StellarSdk.TimeoutInfinite)
       .build();
 
     // Prepare and sign transaction
-    const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR.SOROBAN_RPC_URL);
     const preparedTransaction = await rpcServer.prepareTransaction(tx);
 
     console.log('Signing transaction...');
@@ -164,15 +174,15 @@ export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
   try {
     console.log('Starting proof verification process...');
 
-    // Create wallet
-    const { keypair } = createStellarWallet();
-    console.log(`Wallet address: ${keypair.publicKey()}`);
-
-    // Load proof
+    // Load proof first (validate before wallet creation)
     const proof = loadProof(proofPath);
 
     // Prepare proof data
     const proofData = prepareProofData(proof);
+
+    // Create wallet
+    const { keypair } = createStellarWallet();
+    console.log(`Wallet address: ${keypair.publicKey()}`);
 
     // Submit transaction
     const txHash = await submitVerificationTransaction(keypair, proofData);

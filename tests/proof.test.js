@@ -90,7 +90,7 @@ describe('Proof Validation Tests', () => {
       const signature = proof.signatures[0];
       const signerAddress = proof.witnesses[0].id;
 
-      const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+      const recoveredAddress = ethers.verifyMessage(message, signature);
       expect(recoveredAddress.toLowerCase()).toBe(signerAddress.toLowerCase());
     });
   });

@@ -45,7 +45,7 @@ vi.mock('stellar-hd-wallet', () => ({
   },
 }));
 
-vi.mock('@stellar/stellar-sdk', () => ({
+const stellarSdkMock = {
   Horizon: {
     Server: class {
       constructor() {
@@ -83,9 +83,17 @@ vi.mock('@stellar/stellar-sdk', () => ({
       constructor() {
         this.prepareTransaction = prepareTransactionMock;
         this.sendTransaction = sendTransactionMock;
+        this.getAccount = vi.fn().mockResolvedValue({ sequence: '12345' });
       }
     },
   },
+};
+
+vi.mock('@stellar/stellar-sdk', () => stellarSdkMock);
+
+vi.mock('stellar-sdk', () => ({
+  default: stellarSdkMock,
+  ...stellarSdkMock,
 }));
 
 beforeEach(() => {

@@ -38,15 +38,16 @@
     "@ethersproject/keccak256": "^5.8.0",
     "@reclaimprotocol/js-sdk": "^4.3.1",
     "@reclaimprotocol/zk-fetch": "^0.4.0",
-    "@stellar/stellar-sdk": "^13.3.0",
+    "@stellar/stellar-base": "^14.0.4",
     "dotenv": "^17.2.1",
-    "stellar-hd-wallet": "^1.0.2"
+    "stellar-hd-wallet": "^1.0.2",
+    "stellar-sdk": "^13.3.0"
   },
   "devDependencies": {
-    "vitest": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "@vitest/coverage-v8": "^3.2.4"
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -58,5 +59,8 @@
   "bugs": {
     "url": "https://github.com/your-username/zkfetch-stellar-example/issues"
   },
-  "homepage": "https://github.com/your-username/zkfetch-stellar-example#readme"
+  "homepage": "https://github.com/your-username/zkfetch-stellar-example#readme",
+  "overrides": {
+    "@stellar/stellar-base": "^14.0.4"
+  }
 }
