@@ -37,7 +37,7 @@
   "dependencies": {
     "@ethersproject/keccak256": "^5.8.0",
     "@reclaimprotocol/js-sdk": "^4.3.1",
-    "@reclaimprotocol/zk-fetch": "^0.4.0",
+    "@reclaimprotocol/zk-fetch": "^0.8.0",
     "@stellar/stellar-base": "^14.0.4",
     "dotenv": "^17.2.1",
     "stellar-hd-wallet": "^1.0.2",
