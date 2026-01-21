@@ -317,7 +317,7 @@ The application interacts with a Soroban smart contract that:
 |:-----------|:-----------------|:--------------|:--------------|:--------------|
 | Coinmarketcap | https://coinmarketcap.com/ | `<div class="circulating-supply-value">\\s*<span>(?<cap>[0-9]+(?:\\.[0-9]+)?[A-Za-z]?)</span>\\s*<!-- -->BTC` | `{ cap: '19.96M' }` | Bitcoin's Circulating Supply |
 | Yahoo Finance | https://finance.yahoo.com/markets/stocks/most-active/ | `<fin-streamer data-test="change" data-symbol="NVDA" data-field="marketCap" data-trend="none" data-value="4261212044021.6064" active="">(?<marketCap>[0-9]+(?:\\.[0-9]+)?[A-Za-z]?)</fin-streamer>` | `{ marketCap: '4.261T' }` | Most Active Stock's Market Cap |
-| Github |  'https://github.com/torvalds/linux' | `<span[^>]*class="[^"]*js-social-count[^"]*"[^>]*>\s*(?<stars>[0-9]+(?:\.[0-9]+)?[kKmM]?)\s*</span>` | `{ stars: '211k' }` | Repository Stars |
+| Github |  https://github.com/torvalds/linux | `<span[^>]*class="[^"]*js-social-count[^"]*"[^>]*>\s*(?<stars>[0-9]+(?:\.[0-9]+)?[kKmM]?)\s*</span>` | `{ stars: '211k' }` | Repository Stars |
 | Internet Live Stats | https://www.internetlivestats.com/total-number-of-websites/ | `<td class="val">(?<websites>[0-9,]+)</td>` | `{ websites: '1,630,322,579' }` | Total Number of Registered Websites |
 | Flightware | https://www.flightaware.com/resources/airport/KJFK/weather | `<td class="alignleft weatherTemperature" style="width: 79px" >(?<temparature>.*?)</td>` | `{ temparature: '21' }` | Airports Weather |
 | Social Counts | https://socialcounts.org/youtube-live-subscriber-count/UCX6OQ3DkcsbYNE6H8uQQuVA | `<<div class=\"tracking-tight text-gray-900 dark:text-white text-xl\">(?<count>.*?)</div>` | `{ count: '103,488,793,716' }` | Youtubers Subscription Counts |
