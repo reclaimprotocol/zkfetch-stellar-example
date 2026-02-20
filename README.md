@@ -267,12 +267,20 @@ npm run format:check
 
 ## Network Configuration
 
+### Stellar Mainnet
+
+- **Network**: Mainnet
+- **Horizon URL**: https://horizon.stellar.org
+- **Soroban RPC**: https://soroban.stellar.org
+- **Contract ID**: CD4M2KHW3ESOV3RUT7KCTC6BX37PIL2Z3BEK47IA74KIMFIFUI3JJDMO
+- **Explorer**: https://stellar.expert/explorer/public/
+
 ### Stellar Testnet
 
 - **Network**: Testnet
 - **Horizon URL**: https://horizon-testnet.stellar.org
 - **Soroban RPC**: https://soroban-testnet.stellar.org
-- **Contract ID**: CCDFS3UOSJOM2RWKVFLT76SIKI3WCSVSFUGX24EL4NXVISFOFQB37KKO
+- **Contract ID**: CA3EMXR6JOOTNP44T3OAJFMMMGKRRETDJKBLZP2RU3SIY4SDFAH54DU5
 - **Explorer**: https://stellar.expert/explorer/testnet/
 
 ### API Endpoints

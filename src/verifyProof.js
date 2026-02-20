@@ -108,7 +108,7 @@ function prepareProofData(proof) {
  */
 async function submitVerificationTransaction(keypair, proofData) {
   try {
-    const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR.SOROBAN_RPC_URL);
+    const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR_TESTNET.SOROBAN_RPC_URL);
     // const server = await getStellarServer();
     const publicKey = keypair.publicKey();
 
@@ -125,18 +125,18 @@ async function submitVerificationTransaction(keypair, proofData) {
     // );
 
     // Create contract instance
-    const contract = new StellarSdk.Contract(CONFIG.STELLAR.CONTRACT_ID);
+    const contract = new StellarSdk.Contract(CONFIG.STELLAR_TESTNET.CONTRACT_ID);
 
     // Build transaction
     const txBuilder = new StellarSdk.TransactionBuilder(accountResponse, {
-      fee: CONFIG.STELLAR.BASE_FEE,
+      fee: CONFIG.STELLAR_TESTNET.BASE_FEE,
       networkPassphrase: CONFIG.TESTNET_DETAILS.networkPassphrase,
     });
 
     const tx = txBuilder
       .addOperation(
         contract.call(
-    CONFIG.STELLAR.FUNCTION_NAME,
+    CONFIG.STELLAR_TESTNET.FUNCTION_NAME,
     bytesN(proofData.message, 32),
     bytesN(proofData.signature.slice(0, 64), 64),
     StellarSdk.nativeToScVal(proofData.recId, { type: 'u32' })
@@ -157,7 +157,7 @@ async function submitVerificationTransaction(keypair, proofData) {
 
     console.log('Transaction submitted successfully!');
     console.log(
-      `Transaction Link: ${CONFIG.STELLAR.EXPLORER_LINK}${sendResult.hash}`
+      `Transaction Link: ${CONFIG.STELLAR_TESTNET.EXPLORER_LINK}${sendResult.hash}`
     );
 
     return sendResult.hash;

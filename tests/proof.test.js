@@ -283,7 +283,7 @@ describe('Configuration Tests', () => {
   it('should have valid configuration', () => {
     expect(CONFIG.RECLAIM.APP_ID).toBeDefined();
     expect(CONFIG.RECLAIM.APP_SECRET).toBeDefined();
-    expect(CONFIG.STELLAR.CONTRACT_ID).toBeDefined();
+    expect(CONFIG.STELLAR_TESTNET.CONTRACT_ID).toBeDefined();
     expect(CONFIG.API.COINGECKO_STELLAR_PRICE).toBeDefined();
   });
 
@@ -294,6 +294,6 @@ describe('Configuration Tests', () => {
 
   it('should have valid Stellar network configuration', () => {
     expect(CONFIG.TESTNET_DETAILS.networkUrl).toMatch(/^https:\/\//);
-    expect(CONFIG.STELLAR.SOROBAN_RPC_URL).toMatch(/^https:\/\//);
+    expect(CONFIG.STELLAR_TESTNET.SOROBAN_RPC_URL).toMatch(/^https:\/\//);
   });
 });

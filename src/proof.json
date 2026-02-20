@@ -3,22 +3,22 @@
     "provider": "http",
     "parameters": "{\"body\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"regex\",\"value\":\"\\\\{\\\"stellar\\\":\\\\{\\\"usd\\\":(?<price>[\\\\d\\\\.]+)\\\\}\\\\}\"}],\"responseRedactions\":[],\"url\":\"https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd\"}",
     "owner": "0x381994d6b9b08c3e7cfe3a4cd544c85101b8f201",
-    "timestampS": 1768477978,
-    "context": "{\"extractedParameters\":{\"price\":\"0.231093\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
-    "identifier": "0x88c874dc095695687102a8318309266e7a99140a47bfafacff4b848b611ef04b",
+    "timestampS": 1770196240,
+    "context": "{\"extractedParameters\":{\"price\":\"0.17778\"},\"providerHash\":\"0x53da280b3b4d5c01860bcf84ae6b4ea6bc367ac59851abf075b1ab122eef01cf\"}",
+    "identifier": "0x25bb9032b97853d3c70ae7b771674bac0adc5de34ff3a9184fcb7c44b2af58a6",
     "epoch": 1
   },
-  "identifier": "0x88c874dc095695687102a8318309266e7a99140a47bfafacff4b848b611ef04b",
+  "identifier": "0x25bb9032b97853d3c70ae7b771674bac0adc5de34ff3a9184fcb7c44b2af58a6",
   "signatures": [
-    "0x7fa1b73bd74663dbbb045a5c8798eb18646d4ed486978baf764a7989b99ebe2f76d2ca5b64a72807a3307bb30c0d34b9fbe21e34a285023cd4a6579b938c6bfe1b"
+    "0x9e24885a943f3ee7a51b4755be071bb3b74bec9406d1c0d1229f62f04214fd2c2a810d80740f7d27f7c4050710aa1a23611a085c79f17a958fead12a524035dc1c"
   ],
   "extractedParameterValues": {
-    "price": "0.231093"
+    "price": "0.17778"
   },
   "witnesses": [
     {
       "id": "0x244897572368eadf65bfbc5aec98d8e5443a9072",
-      "url": "wss://attestor.reclaimprotocol.org:447/ws"
+      "url": "wss://attestor.reclaimprotocol.org:444/ws"
     }
   ]
 }

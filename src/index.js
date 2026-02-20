@@ -130,7 +130,7 @@ Features:
 
 Configuration:
 - Network: ${this.config.TESTNET_DETAILS.network}
-- Contract: ${this.config.STELLAR.CONTRACT_ID}
+- Contract: ${this.config.STELLAR_TESTNET.CONTRACT_ID}
 - Stellar API: ${this.config.API.COINGECKO_STELLAR_PRICE}
 - Trading Economics API: ${this.config.API.TRADING_ECONOMICS_COUNTRIES}
 - Forbes API: ${this.config.API.FORBES_BILLIONAIRES}

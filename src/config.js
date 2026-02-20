@@ -19,8 +19,24 @@ export const CONFIG = {
       '0xfdc676e00ac9c648dfbcc271263c2dd95233a8abd391458c91ea88526a299223',
   },
 
-  // Stellar network configuration
-  STELLAR: {
+  // Stellar mainnet configuration
+  STELLAR_MAINNET: {
+    CONTRACT_ID: 'CD4M2KHW3ESOV3RUT7KCTC6BX37PIL2Z3BEK47IA74KIMFIFUI3JJDMO',
+    SOROBAN_RPC_URL: 'https://soroban.stellar.org',
+    EXPLORER_LINK: 'https://stellar.expert/explorer/public/tx/',
+    FUNCTION_NAME: 'verify_proof',
+    BASE_FEE: '100',
+  },
+
+  // Mainnet details
+  MAINNET_DETAILS: {
+    network: 'MAINNET',
+    networkUrl: 'https://horizon.stellar.org',
+    networkPassphrase: 'Public Global Stellar Network ; September 2015',
+  },
+
+  // Stellar testnet configuration
+  STELLAR_TESTNET: {
     CONTRACT_ID: 'CA3EMXR6JOOTNP44T3OAJFMMMGKRRETDJKBLZP2RU3SIY4SDFAH54DU5',
     SOROBAN_RPC_URL: 'https://soroban-testnet.stellar.org',
     EXPLORER_LINK: 'https://stellar.expert/explorer/testnet/tx/',
@@ -28,7 +44,7 @@ export const CONFIG = {
     BASE_FEE: '100',
   },
 
-  // Network details
+  // Testnet details
   TESTNET_DETAILS: {
     network: 'TESTNET',
     networkUrl: 'https://horizon-testnet.stellar.org',
