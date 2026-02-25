@@ -22,7 +22,7 @@ export const CONFIG = {
   // Stellar mainnet configuration
   STELLAR_MAINNET: {
     CONTRACT_ID: 'CD4M2KHW3ESOV3RUT7KCTC6BX37PIL2Z3BEK47IA74KIMFIFUI3JJDMO',
-    SOROBAN_RPC_URL: 'https://soroban.stellar.org',
+    SOROBAN_RPC_URL: 'https://mainnet.sorobanrpc.com',
     EXPLORER_LINK: 'https://stellar.expert/explorer/public/tx/',
     FUNCTION_NAME: 'verify_proof',
     BASE_FEE: '100',

@@ -104,43 +104,39 @@ function prepareProofData(proof) {
  * Creates and submits the verification transaction
  * @param {Object} keypair - Stellar keypair
  * @param {Object} proofData - Prepared proof data
+ * @param {Object} stellarConfig - Stellar network configuration
+ * @param {Object} networkDetails - Network details (passphrase, etc.)
  * @returns {Promise<string>} Transaction hash
  */
-async function submitVerificationTransaction(keypair, proofData) {
+async function submitVerificationTransaction(keypair, proofData, stellarConfig, networkDetails) {
   try {
-    const rpcServer = new StellarSdk.rpc.Server(CONFIG.STELLAR_TESTNET.SOROBAN_RPC_URL);
-    // const server = await getStellarServer();
+    const rpcServer = new StellarSdk.rpc.Server(stellarConfig.SOROBAN_RPC_URL);
     const publicKey = keypair.publicKey();
 
     console.log(
-      `Connecting to Stellar network: ${CONFIG.TESTNET_DETAILS.networkUrl}`
+      `Connecting to Stellar ${networkDetails.network}: ${networkDetails.networkUrl}`
     );
 
     // Load account
     const accountResponse = await rpcServer.getAccount(publicKey);
-    // const account = new StellarSdk.Account(publicKey, accountResponse.sequence);
-
-    // console.log(
-    //   `Account balance: ${accountResponse.balances[0]?.balance || '0'} XLM`
-    // );
 
     // Create contract instance
-    const contract = new StellarSdk.Contract(CONFIG.STELLAR_TESTNET.CONTRACT_ID);
+    const contract = new StellarSdk.Contract(stellarConfig.CONTRACT_ID);
 
     // Build transaction
     const txBuilder = new StellarSdk.TransactionBuilder(accountResponse, {
-      fee: CONFIG.STELLAR_TESTNET.BASE_FEE,
-      networkPassphrase: CONFIG.TESTNET_DETAILS.networkPassphrase,
+      fee: stellarConfig.BASE_FEE,
+      networkPassphrase: networkDetails.networkPassphrase,
     });
 
     const tx = txBuilder
       .addOperation(
         contract.call(
-    CONFIG.STELLAR_TESTNET.FUNCTION_NAME,
-    bytesN(proofData.message, 32),
-    bytesN(proofData.signature.slice(0, 64), 64),
-    StellarSdk.nativeToScVal(proofData.recId, { type: 'u32' })
-  )
+          stellarConfig.FUNCTION_NAME,
+          bytesN(proofData.message, 32),
+          bytesN(proofData.signature.slice(0, 64), 64),
+          StellarSdk.nativeToScVal(proofData.recId, { type: 'u32' })
+        )
       )
       .setTimeout(StellarSdk.TimeoutInfinite)
       .build();
@@ -157,7 +153,7 @@ async function submitVerificationTransaction(keypair, proofData) {
 
     console.log('Transaction submitted successfully!');
     console.log(
-      `Transaction Link: ${CONFIG.STELLAR_TESTNET.EXPLORER_LINK}${sendResult.hash}`
+      `Transaction Link: ${stellarConfig.EXPLORER_LINK}${sendResult.hash}`
     );
 
     return sendResult.hash;
@@ -169,10 +165,12 @@ async function submitVerificationTransaction(keypair, proofData) {
 /**
  * Main function to verify a proof on the Stellar blockchain
  * @param {string} proofPath - Path to the proof file
+ * @param {string} network - Network to use ('testnet' or 'mainnet')
  */
-export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
+export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE, network = 'testnet') {
   try {
-    console.log('Starting proof verification process...');
+    const { stellarConfig, networkDetails } = getNetworkConfig(network);
+    console.log(`Starting proof verification on ${network.toUpperCase()}...`);
 
     // Load proof first (validate before wallet creation)
     const proof = loadProof(proofPath);
@@ -185,7 +183,7 @@ export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
     console.log(`Wallet address: ${keypair.publicKey()}`);
 
     // Submit transaction
-    const txHash = await submitVerificationTransaction(keypair, proofData);
+    const txHash = await submitVerificationTransaction(keypair, proofData, stellarConfig, networkDetails);
 
     console.log('Proof verification completed successfully!');
     return txHash;
@@ -196,12 +194,52 @@ export async function verifyProof(proofPath = CONFIG.PATHS.PROOF_FILE) {
 }
 
 /**
+ * Parses CLI arguments for network selection and proof path
+ * @returns {Object} { network: 'testnet' | 'mainnet', proofPath: string }
+ */
+function parseCliArgs() {
+  const args = process.argv.slice(2);
+  let network = 'testnet'; // default
+  let proofPath = CONFIG.PATHS.PROOF_FILE;
+
+  for (const arg of args) {
+    if (arg === '--mainnet') {
+      network = 'mainnet';
+    } else if (arg === '--testnet') {
+      network = 'testnet';
+    } else if (!arg.startsWith('--')) {
+      proofPath = arg;
+    }
+  }
+
+  return { network, proofPath };
+}
+
+/**
+ * Gets network configuration based on network name
+ * @param {string} network - 'testnet' or 'mainnet'
+ * @returns {Object} { stellarConfig, networkDetails }
+ */
+function getNetworkConfig(network) {
+  if (network === 'mainnet') {
+    return {
+      stellarConfig: CONFIG.STELLAR_MAINNET,
+      networkDetails: CONFIG.MAINNET_DETAILS,
+    };
+  }
+  return {
+    stellarConfig: CONFIG.STELLAR_TESTNET,
+    networkDetails: CONFIG.TESTNET_DETAILS,
+  };
+}
+
+/**
  * CLI entry point
  */
 async function main() {
   try {
-    const proofPath = process.argv[2] || CONFIG.PATHS.PROOF_FILE;
-    await verifyProof(proofPath);
+    const { network, proofPath } = parseCliArgs();
+    await verifyProof(proofPath, network);
     process.exit(0);
   } catch (error) {
     console.error('Fatal error:', error.message);
@@ -210,7 +248,7 @@ async function main() {
 }
 
 // Export for testing
-export { main, bytesN };
+export { main, bytesN, parseCliArgs, getNetworkConfig };
 
 // Run if this file is executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
